@@ -147,7 +147,17 @@
       btn_approve_plan: "Approve recommendation",
       btn_already_approved: "Plan already approved this cycle ✓",
       approved_written_note: "Written to repayment_plans · farmer dashboard is live.",
-      one_click_write_note: "One click writes the plan. Open the farmer login in another tab to see it land.",
+      notif_welcome_title: "Welcome to EquiFlow",
+      notif_welcome_body: "Your repayment will now flex with harvest and lean months — never a blind EMI.",
+      notif_payment_title: "Simulated payment recorded",
+      notif_payment_body: "A simulated payment of {amount} was logged. No real money moved.",
+      notif_approved_title: "Lender approved a new plan",
+      notif_approved_body: "Your due amount this cycle is now {amount}.",
+      notif_approved_micropulse: " MicroPulse option: {amount} / week.",
+      notif_autoadjust_title: "Auto-adjust · {status}",
+      notif_autoadjust_stable: "Cash flow recovered. Your recommended payment is back to {amount}.",
+      notif_autoadjust_seasonal: "We noticed higher farming expenses this month — your payment has been lowered to {amount}.",
+      notif_autoadjust_stress: "Income is tight this month. Your payment has been lowered to {amount}.",
 
       status_stable: "Stable",
       status_seasonal: "Seasonal Dip (Investment Phase)",
@@ -293,7 +303,17 @@
       btn_approve_plan: "सिफारिश स्वीकृत करें",
       btn_already_approved: "इस चक्र की योजना पहले ही स्वीकृत है ✓",
       approved_written_note: "योजना दर्ज की गई · किसान डैशबोर्ड लाइव है।",
-      one_click_write_note: "एक क्लिक से योजना स्वीकृत होती है। लाइव देखने के लिए दूसरे टैब में किसान लॉगिन खोलें।",
+      notif_welcome_title: "इक्विफ्लो में आपका स्वागत है",
+      notif_welcome_body: "आपकी किश्त अब फसल और मंदी के महीनों के अनुसार लचीली रहेगी — कभी भी अंधी ईएमआई नहीं।",
+      notif_payment_title: "सिम्युलेटेड भुगतान दर्ज किया गया",
+      notif_payment_body: "{amount} का सिम्युलेटेड भुगतान दर्ज किया गया। कोई वास्तविक पैसा स्थानांतरित नहीं हुआ।",
+      notif_approved_title: "ऋणदाता ने नई योजना को मंजूरी दी",
+      notif_approved_body: "इस चक्र में आपकी देय राशि अब {amount} है।",
+      notif_approved_micropulse: " माइक्रोपल्स विकल्प: {amount} / सप्ताह।",
+      notif_autoadjust_title: "स्वचालित समायोजन · {status}",
+      notif_autoadjust_stable: "नकदी प्रवाह बहाल हुआ। आपकी अनुशंसित किश्त वापस {amount} हो गई है।",
+      notif_autoadjust_seasonal: "हमने इस महीने अधिक कृषि खर्च देखा — आपकी किश्त घटाकर {amount} कर दी गई है।",
+      notif_autoadjust_stress: "इस महीने आय कम है। आपकी किश्त घटाकर {amount} कर दी गई है।",
 
       status_stable: "स्थिर",
       status_seasonal: "मौसमी मंदी (निवेश चरण)",
@@ -439,7 +459,17 @@
       btn_approve_plan: "शिफारस मंजूर करा",
       btn_already_approved: "या चक्राची योजना आधीच मंजूर आहे ✓",
       approved_written_note: "योजना नोंदवली गेली · शेतकरी डैशबोर्ड थेट चालू आहे.",
-      one_click_write_note: "एका क्लिकने योजना मंजूर होते.",
+      notif_welcome_title: "इक्विफ्लोमध्ये आपले स्वागत आहे",
+      notif_welcome_body: "तुमची परतफेड आता पिके आणि मंदीच्या महिन्यांनुसार लवचिक असेल — कधीही आंधळा ईएमआय नाही.",
+      notif_payment_title: "सिम्युलेटेड भरणा नोंदवला गेला",
+      notif_payment_body: "{amount} चा सिम्युलेटेड भरणा नोंदवला गेला. कोणतेही खरे पैसे हस्तांतरित झाले नाहीत.",
+      notif_approved_title: "सावकाराने नवीन योजनेला मंजुरी दिली",
+      notif_approved_body: "या चक्रातील तुमची देय रक्कम आता {amount} आहे.",
+      notif_approved_micropulse: " मायक्रोपल्स पर्याय: {amount} / आठवडा.",
+      notif_autoadjust_title: "स्वयंचलित समायोजन · {status}",
+      notif_autoadjust_stable: "रोकड प्रवाह पूर्ववत झाला. तुमची शिफारस केलेली रक्कम परत {amount} झाली आहे.",
+      notif_autoadjust_seasonal: "आम्हाला या महिन्यात जास्त शेती खर्च दिसला — तुमची रक्कम {amount} पर्यंत कमी केली आहे.",
+      notif_autoadjust_stress: "या महिन्यात उत्पन्न कमी आहे. तुमची रक्कम {amount} पर्यंत कमी केली आहे.",
 
       status_stable: "स्थिर",
       status_seasonal: "हंगामी मंदी (गुंतवणूक टप्पा)",
@@ -585,7 +615,17 @@
       btn_approve_plan: "सिफारिश मंजूर करो",
       btn_already_approved: "इण म्हीने री योजना मंजूर हुयोड़ी है ✓",
       approved_written_note: "योजना लिख दीवी · किसान बोर्ड पे चालू है।",
-      one_click_write_note: "एक क्लिक सू योजना मंजूर होवे।",
+      notif_welcome_title: "इक्विफ्लो मांय आपरो स्वागत है",
+      notif_welcome_body: "आपरी किश्त अबै फसल अर मंदी रा म्हीनां मुजब चालेला — कदे ई फालतू ईएमआई कोनी।",
+      notif_payment_title: "सिम्युलेटेड भरणा लिख्यो गयो",
+      notif_payment_body: "{amount} रो सिम्युलेटेड भरणा लिख्यो गयो। साचा रुपिया कोनी कटे।",
+      notif_approved_title: "सावकार नवी योजना मंजूर करी",
+      notif_approved_body: "इण म्हीने री आपरी देणी रकम अबै {amount} है।",
+      notif_approved_micropulse: " मायक्रोपल्स विकल्प: {amount} / हफ्तो।",
+      notif_autoadjust_title: "आपोआप बदलाव · {status}",
+      notif_autoadjust_stable: "कमाई पाछी सही हुगी। आपरी किश्त पाछी {amount} हुगी है।",
+      notif_autoadjust_seasonal: "इण म्हीने खेती मांय खरच ज्यादा हुयो — आपरी किश्त घटाने {amount} करी है।",
+      notif_autoadjust_stress: "इण म्हीने कमाई कम है। आपरी किश्त घटाने {amount} करी है।",
 
       status_stable: "सही-साट",
       status_seasonal: "फसली खरच (निवेश चरण)",
@@ -731,7 +771,17 @@
       btn_approve_plan: "பரிந்துரையை ஒப்புக்கொள்",
       btn_already_approved: "ஏற்கனவே ஒப்புக்கொள்ளப்பட்டது ✓",
       approved_written_note: "திட்டம் பதிவு செய்யப்பட்டது.",
-      one_click_write_note: "ஒரே கிளிக் மூலம் திட்டம் சேமிக்கப்படும்.",
+      notif_welcome_title: "ஈக்விப்ளோவிற்கு வரவேற்கிறோம்",
+      notif_welcome_body: "உங்கள் திருப்பிச் செலுத்துதல் இப்போது அறுவடை மற்றும் குறைந்த வருமான மாதங்களுடன் நெகிழும்.",
+      notif_payment_title: "சோதனை செலுத்துதல் பதிவு செய்யப்பட்டது",
+      notif_payment_body: "{amount} சோதனை செலுத்துதல் பதிவு செய்யப்பட்டது. உண்மையான பணம் மாறவில்லை.",
+      notif_approved_title: "கடன் வழங்குநர் புதிய திட்டத்திற்கு ஒப்புதல் அளித்தார்",
+      notif_approved_body: "இந்த சுழற்சியில் நீங்கள் செலுத்த வேண்டிய தொகை இப்போது {amount}.",
+      notif_approved_micropulse: " மைக்ரோபல்ஸ் விருப்பம்: {amount} / வாரம்.",
+      notif_autoadjust_title: "தானியங்கி மாற்றம் · {status}",
+      notif_autoadjust_stable: "பணப்புழக்கம் மீண்டது. உங்கள் பரிந்துரைக்கப்பட்ட தொகை மீண்டும் {amount} ஆக உள்ளது.",
+      notif_autoadjust_seasonal: "இந்த மாதத்தில் அதிக விவசாய செலவுகளைக் கண்டோம் — உங்கள் தொகை {amount} ஆகக் குறைக்கப்பட்டது.",
+      notif_autoadjust_stress: "இந்த மாதத்தில் வருமானம் குறைவாக உள்ளது. உங்கள் தொகை {amount} ஆகக் குறைக்கப்பட்டது.",
 
       status_stable: "சீராக உள்ளது",
       status_seasonal: "பருவகால வீழ்ச்சி (முதலீட்டு நிலை)",
@@ -877,7 +927,17 @@
       btn_approve_plan: "సిఫార్సును ఆమోదించండి",
       btn_already_approved: "ఈ చక్రం ప్లాన్ ఇప్పటికే ఆమోదించబడింది ✓",
       approved_written_note: "ప్లాన్ నమోదైంది · రైతు డాష్‌బోర్డ్ లైవ్‌లో ఉంది.",
-      one_click_write_note: "ఒకే క్లిక్‌తో ప్లాన్ ఆమోదించబడుతుంది.",
+      notif_welcome_title: "ఈక్విఫ్లోకి స్వాగతం",
+      notif_welcome_body: "మీ తిరిగి చెల్లింపు ఇప్పుడు పంట కాలాలు మరియు ప్రతికూల నెలలకు అనుగుణంగా మారుతుంది.",
+      notif_payment_title: "సిమ్యులేటెడ్ చెల్లింపు రికార్డ్ చేయబడింది",
+      notif_payment_body: "{amount} సిమ్యులేటెడ్ చెల్లింపు నమోదు చేయబడింది. నిజమైన డబ్బు మారలేదు.",
+      notif_approved_title: "రుణదాత కొత్త ప్రణాళికను ఆమోదించారు",
+      notif_approved_body: "ఈ సైకిల్‌లో మీరు చెల్లించాల్సిన మొత్తం ఇప్పుడు {amount}.",
+      notif_approved_micropulse: " మైక్రోపల్స్ ఆప్షన్: {amount} / వారం.",
+      notif_autoadjust_title: "ఆటో-అడ్జస్ట్ · {status}",
+      notif_autoadjust_stable: "నగదు ప్రవాహం పునరుద్ధరించబడింది. మీ సిఫార్సు చేసిన చెల్లింపు మళ్ళీ {amount} అయింది.",
+      notif_autoadjust_seasonal: "ఈ నెలలో ఎక్కువ వ్యవసాయ ఖర్చులను గమనించాము — మీ చెల్లింపు {amount} కి తగ్గించబడింది.",
+      notif_autoadjust_stress: "ఈ నెలలో ఆదాయం తక్కువగా ఉంది. మీ చెల్లింపు {amount} కి తగ్గించబడింది.",
 
       status_stable: "స్థిరంగా ఉంది",
       status_seasonal: "సీజనల్ తగ్గుదల (పెట్టుబడి దశ)",
@@ -1023,7 +1083,17 @@
       btn_approve_plan: "সুপারিশ অনুমোদন করুন",
       btn_already_approved: "পরিকল্পনা ইতিমধ্যেই অনুমোদিত ✓",
       approved_written_note: "পরিকল্পনা নথিভুক্ত করা হয়েছে।",
-      one_click_write_note: "এক ক্লিকে পরিকল্পনা অনুমোদিত হয়।",
+      notif_welcome_title: "ইকুইফ্লোতে স্বাগতম",
+      notif_welcome_body: "আপনার কিস্তি এখন ফসল এবং মন্দার মাসের সাথে সামঞ্জস্যপূর্ণ হবে — কখনো অন্ধ ইএমআই নয়।",
+      notif_payment_title: "সিমুলেটেড পেমেন্ট নথিভুক্ত করা হয়েছে",
+      notif_payment_body: "{amount} এর একটি সিমুলেটেড পেমেন্ট রেকর্ড করা হয়েছে। কোনো আসল টাকা স্থানান্তরিত হয়নি।",
+      notif_approved_title: "ঋণদাতা নতুন পরিকল্পনা অনুমোদন করেছেন",
+      notif_approved_body: "এই চক্রে আপনার দেয় পরিমাণ এখন {amount}।",
+      notif_approved_micropulse: " মাইক্রোপালস বিকল্প: {amount} / সপ্তাহ।",
+      notif_autoadjust_title: "স্বয়ংক্রিয় সামঞ্জস্য · {status}",
+      notif_autoadjust_stable: "নগদ প্রবাহ পুনরুদ্ধার হয়েছে। আপনার সুপারিশকৃত কিস্তি আবার {amount} হয়েছে।",
+      notif_autoadjust_seasonal: "এই মাসে বেশি কৃষি খরচ দেখা গেছে — আপনার কিস্তি কমিয়ে {amount} করা হয়েছে।",
+      notif_autoadjust_stress: "এই মাসে আয় কম। আপনার কিস্তি কমিয়ে {amount} করা হয়েছে।",
 
       status_stable: "স্থিতিশীল",
       status_seasonal: "ঋতুভিত্তিক হ্রাস (বিনিয়োগ পর্যায়)",
@@ -1045,9 +1115,15 @@
     apply(code);
   }
 
-  function t(key) {
+  function t(key, params) {
     var lang = getLang();
-    return (DICT[lang] && DICT[lang][key]) || (DICT.en && DICT.en[key]) || key;
+    var str = (DICT[lang] && DICT[lang][key]) || (DICT.en && DICT.en[key]) || key;
+    if (params) {
+      Object.keys(params).forEach(function (k) {
+        str = str.split("{" + k + "}").join(String(params[k]));
+      });
+    }
+    return str;
   }
 
   function scriptFor(lang) {

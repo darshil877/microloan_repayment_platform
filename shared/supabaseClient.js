@@ -290,13 +290,14 @@
       return latestPlanForLoan(db, loanId, asOfDate(db));
     },
 
-    async addNotification(farmerId, title, body) {
+    async addNotification(farmerId, titleKey, bodyKey, params) {
       var db = loadDb();
       db.notifications.unshift({
         id: uid(),
         farmer_id: farmerId,
-        title: title,
-        body: body,
+        titleKey: titleKey,
+        bodyKey: bodyKey,
+        params: params || {},
         created_at: new Date().toISOString(),
         read: false
       });
@@ -323,8 +324,9 @@
       saveDb(db);
       await eq.addNotification(
         farmerId,
-        "Simulated payment recorded",
-        "A simulated payment of " + eq.formatINR(amount) + " was logged. No real money moved."
+        "notif_payment_title",
+        "notif_payment_body",
+        { amount: eq.formatINR(amount) }
       );
       emit({ type: "payment", farmer_id: farmerId });
       return payment;
@@ -347,11 +349,15 @@
       };
       db.repayment_plans.push(plan);
       saveDb(db);
+      var params = { amount: eq.formatINR(analysis.recommendedEMI) };
+      if (analysis.microPulse) {
+        params.micropulseAmount = eq.formatINR(analysis.microPulse);
+      }
       await eq.addNotification(
         loan.farmer_id,
-        "Lender approved a new plan",
-        "Your due amount this cycle is now " + eq.formatINR(analysis.recommendedEMI) + ". " +
-          (analysis.microPulse ? "MicroPulse option: " + eq.formatINR(analysis.microPulse) + " / week." : "")
+        "notif_approved_title",
+        "notif_approved_body",
+        params
       );
       emit({ type: "plan-approved", loan_id: loan.id, farmer_id: loan.farmer_id });
       return plan;
@@ -373,19 +379,28 @@
       db.loans.forEach(function (loan) {
         var txns = visibleTxns(db, loan.farmer_id);
         var analysis = EquiFlowEngine.analyzeCashFlow(txns, loan.base_emi);
-        var body;
+        var statusKey = "status_stress";
+        if (analysis.status === "Stable") statusKey = "status_stable";
+        else if (analysis.status.indexOf("Seasonal") === 0) statusKey = "status_seasonal";
+        else if (analysis.status === "Critical") statusKey = "status_critical";
+
+        var translatedStatus = global.EquiFlowI18n ? global.EquiFlowI18n.t(statusKey) : analysis.status;
+
+        var bodyKey;
         if (analysis.status === "Stable") {
-          body = "Cash flow recovered. Your recommended payment is back to " + eq.formatINR(analysis.recommendedEMI) + ".";
+          bodyKey = "notif_autoadjust_stable";
         } else if (analysis.status.indexOf("Seasonal") === 0) {
-          body = "We noticed higher farming expenses this month — your payment has been lowered to " + eq.formatINR(analysis.recommendedEMI) + ".";
+          bodyKey = "notif_autoadjust_seasonal";
         } else {
-          body = "Income is tight this month. Your payment has been lowered to " + eq.formatINR(analysis.recommendedEMI) + ".";
+          bodyKey = "notif_autoadjust_stress";
         }
+
         db.notifications.unshift({
           id: uid(),
           farmer_id: loan.farmer_id,
-          title: "Auto-adjust · " + analysis.status,
-          body: body,
+          titleKey: "notif_autoadjust_title",
+          bodyKey: bodyKey,
+          params: { status: translatedStatus, amount: eq.formatINR(analysis.recommendedEMI) },
           created_at: new Date().toISOString(),
           read: false
         });

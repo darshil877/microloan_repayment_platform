@@ -172,8 +172,9 @@
         {
           id: "ntf-0001",
           farmer_id: IDS.ramesh,
-          title: "Welcome to EquiFlow",
-          body: "Your repayment will now flex with harvest and lean months — never a blind EMI.",
+          titleKey: "notif_welcome_title",
+          bodyKey: "notif_welcome_body",
+          params: {},
           created_at: "2025-01-10T10:00:00.000Z",
           read: true
         }

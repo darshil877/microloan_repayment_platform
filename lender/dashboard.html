@@ -32,27 +32,27 @@
     <div class="text-cream/60 text-sm">Opening the book…</div>
   </div>
 
-  <header class="sticky top-0 z-40 backdrop-blur bg-cream/80 border-b border-ink/10">
-    <div class="max-w-[1440px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+  <header class="sticky top-0 z-40 backdrop-blur bg-cream/80 border-b border-ink/10 min-h-16 h-auto py-2">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 shrink-0">
         <div class="w-8 h-8 rounded-full bg-forest text-cream flex items-center justify-center">
           <i data-lucide="waves" class="w-4 h-4"></i>
         </div>
         <span class="font-display text-xl">EquiFlow</span>
         <span class="hidden sm:inline text-xs uppercase tracking-widest text-ink/40 ml-2" data-i18n="nav_lender">Lender desk</span>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 flex-wrap justify-end">
         <button id="btn-reset" class="eq-btn eq-btn-ghost text-xs px-3 py-2 hidden sm:inline-flex" data-i18n="btn_reset_demo">Reset demo</button>
-        <button id="btn-simulate" class="eq-btn eq-btn-gold text-sm px-4 py-2">
+        <button id="btn-simulate" class="eq-btn eq-btn-gold text-sm px-4 py-2" aria-label="Simulate next month">
           <i data-lucide="play" class="w-4 h-4"></i>
-          <span data-i18n="btn_simulate_next">Simulate next month</span>
+          <span class="hidden sm:inline" data-i18n="btn_simulate_next">Simulate next month</span>
         </button>
 
         <!-- Language Switcher in Header -->
         <div class="relative">
-          <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2">
+          <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2" aria-label="Language Switcher">
             <i data-lucide="languages" class="w-4 h-4"></i>
-            <span id="lang-current">EN</span>
+            <span id="lang-current" class="hidden sm:inline">EN</span>
           </button>
           <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 eq-card p-1.5 z-50 shadow-lg"></div>
         </div>

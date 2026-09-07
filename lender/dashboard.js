@@ -3,13 +3,26 @@
   var selectedId = null;
   var borrowers = [];
 
+  var STATUS_KEYS = {
+    "Stable": "status_stable",
+    "Seasonal Dip (Investment Phase)": "status_seasonal",
+    "Financial Stress": "status_stress",
+    "Critical": "status_critical"
+  };
+
+  function statusLabel(status) {
+    if (!status) return "";
+    var key = STATUS_KEYS[status];
+    if (!key && status.indexOf("Seasonal") === 0) key = "status_seasonal";
+    return window.EquiFlowI18n ? EquiFlowI18n.t(key || status) : status;
+  }
+
   function pill(status) {
     var cls = "status-stress";
-    var key = "status_stress";
-    if (status === "Stable") { cls = "status-stable"; key = "status_stable"; }
-    else if (status.indexOf("Seasonal") === 0) { cls = "status-seasonal"; key = "status_seasonal"; }
-    else if (status === "Critical") { cls = "status-critical"; key = "status_critical"; }
-    var text = window.EquiFlowI18n ? EquiFlowI18n.t(key) : status;
+    if (status === "Stable") { cls = "status-stable"; }
+    else if (status.indexOf("Seasonal") === 0) { cls = "status-seasonal"; }
+    else if (status === "Critical") { cls = "status-critical"; }
+    var text = statusLabel(status);
     return '<span class="status-pill ' + cls + '">' + text + "</span>";
   }
 
@@ -150,6 +163,9 @@
       row.addEventListener("click", function () {
         selectedId = row.getAttribute("data-id");
         render();
+        if (window.innerWidth < 1280) {
+          document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       });
     });
   }
@@ -218,7 +234,7 @@
         '<div class="num-xl text-4xl text-forest">' + formatINR(b.effectiveEMI) + "</div>" +
         '<p class="text-xs text-ink/50"><span data-i18n="base_emi_short">' + EquiFlowI18n.t("base_emi_short") + '</span> ' + formatINR(b.loan.base_emi) + "</p></div>" +
       "</div>" +
-      '<div class="h-56 mb-5"><canvas id="lenderChart"></canvas></div>' +
+      '<div class="h-64 sm:h-56 mb-5"><canvas id="lenderChart"></canvas></div>' +
       '<div class="grid md:grid-cols-2 gap-4 mb-5">' +
         '<div class="p-4 rounded-2xl bg-white/50 border border-ink/5">' +
           '<p class="text-xs uppercase tracking-widest text-ink/45 mb-2" data-i18n="why_panel_header">' + EquiFlowI18n.t("why_panel_header") + '</p>' +

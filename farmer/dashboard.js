@@ -82,6 +82,20 @@
     });
   }
 
+  var STATUS_KEYS = {
+    "Stable": "status_stable",
+    "Seasonal Dip (Investment Phase)": "status_seasonal",
+    "Financial Stress": "status_stress",
+    "Critical": "status_critical"
+  };
+
+  function statusLabel(status) {
+    if (!status) return "";
+    var key = STATUS_KEYS[status];
+    if (!key && status.indexOf("Seasonal") === 0) key = "status_seasonal";
+    return EquiFlowI18n.t(key || status);
+  }
+
   function renderFeed(notes) {
     var el = document.getElementById("feed");
     if (!notes.length) {
@@ -89,8 +103,13 @@
       return;
     }
     el.innerHTML = notes.slice(0, 8).map(function (n) {
-      return '<div class="feed-item"><div class="text-sm font-semibold">' + n.title +
-        '</div><div class="text-sm text-ink/70 mt-0.5">' + n.body +
+      var title = n.titleKey ? EquiFlowI18n.t(n.titleKey, n.params) : n.title;
+      var body = n.bodyKey ? EquiFlowI18n.t(n.bodyKey, n.params) : n.body;
+      if (n.params && n.params.micropulseAmount) {
+        body += EquiFlowI18n.t("notif_approved_micropulse", { amount: n.params.micropulseAmount });
+      }
+      return '<div class="feed-item"><div class="text-sm font-semibold">' + title +
+        '</div><div class="text-sm text-ink/70 mt-0.5">' + body +
         '</div><div class="text-[11px] text-ink/40 mt-1">' +
         new Date(n.created_at).toLocaleString("en-IN") + "</div></div>";
     }).join("");
@@ -126,17 +145,12 @@
     state.effectiveEMI = effective;
     state.plan = plan;
 
-    var statusKey = "status_stable";
-    if (analysis.status.indexOf("Seasonal") === 0) statusKey = "status_seasonal";
-    else if (analysis.status === "Financial Stress") statusKey = "status_stress";
-    else if (analysis.status === "Critical") statusKey = "status_critical";
-
     var riskKey = "risk_normal";
     if (analysis.riskLevel === "Low") riskKey = "risk_low";
     else if (analysis.riskLevel === "Medium") riskKey = "risk_medium";
     else if (analysis.riskLevel === "High") riskKey = "risk_high";
 
-    document.getElementById("health-status").textContent = EquiFlowI18n.t(statusKey);
+    document.getElementById("health-status").textContent = statusLabel(analysis.status);
     document.getElementById("risk-label").textContent = EquiFlowI18n.t(riskKey);
     var traffic = document.getElementById("traffic");
     traffic.className = "traffic traffic-" + analysis.riskLevel;

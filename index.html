@@ -25,20 +25,19 @@
   <link rel="stylesheet" href="shared/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 </head>
-<body class="font-sans bg-cream text-ink h-screen flex flex-col overflow-hidden relative">
+<body class="font-sans bg-cream text-ink h-screen flex flex-col overflow-hidden">
+  <div class="flex-1 min-h-0 grid lg:grid-cols-2 overflow-y-auto relative">
 
-  <!-- Fixed Top-Right Language Switcher -->
-  <div class="fixed top-4 right-4 z-50">
-    <div class="relative">
-      <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2 bg-cream/90 backdrop-blur shadow-md border border-ink/15">
-        <i data-lucide="languages" class="w-4 h-4"></i>
-        <span id="lang-current">EN</span>
-      </button>
-      <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 eq-card p-1.5 z-50 shadow-lg"></div>
+    <!-- Absolute Top-Right Language Switcher -->
+    <div class="absolute top-4 right-4 z-50">
+      <div class="relative">
+        <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2 bg-cream/90 backdrop-blur shadow-md border border-ink/15" aria-label="Language Switcher">
+          <i data-lucide="languages" class="w-4 h-4"></i>
+          <span id="lang-current" class="hidden sm:inline">EN</span>
+        </button>
+        <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 eq-card p-1.5 z-50 shadow-lg"></div>
+      </div>
     </div>
-  </div>
-
-  <div class="flex-1 min-h-0 grid lg:grid-cols-2 overflow-y-auto">
     <!-- Left Hero column: Pitch for Judges & SDG 8 -->
     <section class="relative min-h-[42vh] lg:min-h-screen overflow-hidden">
       <img
