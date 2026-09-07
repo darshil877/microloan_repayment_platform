@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EquiFlow — Adaptive Microloan Repayment & Cash-Flow Platform</title>
+  <title data-i18n="brand_name">EquiFlow — Adaptive Microloan Repayment & Cash-Flow Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,7 +25,19 @@
   <link rel="stylesheet" href="shared/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 </head>
-<body class="font-sans bg-cream text-ink h-screen flex flex-col overflow-hidden">
+<body class="font-sans bg-cream text-ink h-screen flex flex-col overflow-hidden relative">
+
+  <!-- Fixed Top-Right Language Switcher -->
+  <div class="fixed top-4 right-4 z-50">
+    <div class="relative">
+      <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2 bg-cream/90 backdrop-blur shadow-md border border-ink/15">
+        <i data-lucide="languages" class="w-4 h-4"></i>
+        <span id="lang-current">EN</span>
+      </button>
+      <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 eq-card p-1.5 z-50 shadow-lg"></div>
+    </div>
+  </div>
+
   <div class="flex-1 min-h-0 grid lg:grid-cols-2 overflow-y-auto">
     <!-- Left Hero column: Pitch for Judges & SDG 8 -->
     <section class="relative min-h-[42vh] lg:min-h-screen overflow-hidden">
@@ -49,14 +62,14 @@
           <!-- SDG 8 Badge -->
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 text-gold text-xs font-semibold tracking-wide">
             <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
-            UN SDG 8: Decent Work & Economic Growth
+            <span data-i18n="sdg_badge">UN SDG 8: Decent Work & Economic Growth</span>
           </div>
 
           <h1 class="font-display text-4xl md:text-5xl leading-[1.12]">
-            Repayment that <em>breathes</em> with cash flow.
+            <span data-i18n="hero_title_1">Repayment that</span> <em data-i18n="hero_title_2">breathes</em> <span data-i18n="hero_title_3">with cash flow.</span>
           </h1>
 
-          <p class="text-cream/85 text-base md:text-lg leading-relaxed max-w-md">
+          <p class="text-cream/85 text-base md:text-lg leading-relaxed max-w-md" data-i18n="hero_desc">
             Fixed EMIs assume a salary. Most of India doesn’t have one.
             EquiFlow reads harvests, lean months and gig spikes — then tells the lender exactly how much to collect, and when.
           </p>
@@ -65,18 +78,18 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-left">
             <div class="p-3 rounded-xl bg-forest/40 border border-cream/15 backdrop-blur-sm">
               <i data-lucide="sprout" class="w-5 h-5 text-gold mb-1.5"></i>
-              <p class="text-xs font-semibold text-cream">Sowing Dip vs Crisis</p>
-              <p class="text-[11px] text-cream/70">Distinguishes capital input spikes from default risk.</p>
+              <p class="text-xs font-semibold text-cream" data-i18n="chip_sowing_title">Sowing Dip vs Crisis</p>
+              <p class="text-[11px] text-cream/70" data-i18n="chip_sowing_desc">Distinguishes capital input spikes from default risk.</p>
             </div>
             <div class="p-3 rounded-xl bg-forest/40 border border-cream/15 backdrop-blur-sm">
               <i data-lucide="zap" class="w-5 h-5 text-gold mb-1.5"></i>
-              <p class="text-xs font-semibold text-cream">MicroPulse Bites</p>
-              <p class="text-[11px] text-cream/70">Micro weekly payments whenever stress arises.</p>
+              <p class="text-xs font-semibold text-cream" data-i18n="chip_micropulse_title">MicroPulse Bites</p>
+              <p class="text-[11px] text-cream/70" data-i18n="chip_micropulse_desc">Micro weekly payments whenever stress arises.</p>
             </div>
             <div class="p-3 rounded-xl bg-forest/40 border border-cream/15 backdrop-blur-sm">
               <i data-lucide="check-check" class="w-5 h-5 text-gold mb-1.5"></i>
-              <p class="text-xs font-semibold text-cream">1-Click Restructure</p>
-              <p class="text-[11px] text-cream/70">Zero-penalty harvest deferred recovery.</p>
+              <p class="text-xs font-semibold text-cream" data-i18n="chip_restructure_title">1-Click Restructure</p>
+              <p class="text-[11px] text-cream/70" data-i18n="chip_restructure_desc">Zero-penalty harvest deferred recovery.</p>
             </div>
           </div>
         </div>
@@ -86,35 +99,35 @@
     <!-- Right Login Card Section -->
     <section class="eq-grain flex items-center justify-center p-6 md:p-12 bg-cream">
       <div class="w-full max-w-md relative z-10">
-        <p class="text-leaf font-medium text-sm mb-2">Welcome back</p>
-        <h2 class="font-display text-3xl mb-1">Sign in</h2>
-        <p class="text-ink/60 mb-8">One login. We route you by role — borrower or lender.</p>
+        <p class="text-leaf font-medium text-sm mb-2" data-i18n="welcome_back">Welcome back</p>
+        <h2 class="font-display text-3xl mb-1" data-i18n="signin_title">Sign in</h2>
+        <p class="text-ink/60 mb-8" data-i18n="signin_sub">One login. We route you by role — borrower or lender.</p>
 
         <form id="login-form" class="space-y-4">
           <div>
-            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Email</label>
-            <input id="email" type="email" required class="eq-input" placeholder="you@equiflow.demo" autocomplete="username" />
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block" data-i18n="label_email">Email</label>
+            <input id="email" type="email" required class="eq-input" placeholder="you@equiflow.demo" data-i18n-placeholder="placeholder_email" autocomplete="username" />
           </div>
           <div>
-            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Password</label>
-            <input id="password" type="password" required class="eq-input" placeholder="••••••••" autocomplete="current-password" />
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block" data-i18n="label_password">Password</label>
+            <input id="password" type="password" required class="eq-input" placeholder="••••••••" data-i18n-placeholder="placeholder_password_signin" autocomplete="current-password" />
           </div>
           <p id="login-error" class="hidden text-clay text-sm"></p>
           <button type="submit" class="eq-btn eq-btn-primary w-full py-3.5 text-base">
-            Continue
+            <span data-i18n="btn_continue">Continue</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </form>
 
         <p class="mt-5 text-sm text-ink/60">
-          New here?
-          <a href="signup.html" class="text-forest font-semibold underline underline-offset-4">Create an account</a>
+          <span data-i18n="new_here">New here?</span>
+          <a href="signup.html" class="text-forest font-semibold underline underline-offset-4" data-i18n="create_account">Create an account</a>
         </p>
 
         <div class="mt-10">
           <div class="flex items-center gap-3 mb-4">
             <div class="h-px flex-1 bg-ink/10"></div>
-            <span class="text-[11px] uppercase tracking-[0.16em] text-ink/40">Judge demo accounts</span>
+            <span class="text-[11px] uppercase tracking-[0.16em] text-ink/40" data-i18n="judge_accounts_header">Judge demo accounts</span>
             <div class="h-px flex-1 bg-ink/10"></div>
           </div>
           <div class="grid gap-3">
@@ -122,7 +135,7 @@
               <div class="flex items-center gap-3">
                 <img src="https://images.pexels.com/photos/20458058/pexels-photo-20458058.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Ramesh" class="w-12 h-12 rounded-full object-cover" />
                 <div>
-                  <div class="font-semibold">Ramesh Patel · Farmer</div>
+                  <div class="font-semibold" data-i18n="ramesh_role">Ramesh Patel · Farmer</div>
                   <div class="text-xs text-ink/55">farmer@equiflow.demo · Demo@1234</div>
                 </div>
               </div>
@@ -131,19 +144,19 @@
               <div class="flex items-center gap-3">
                 <img src="https://images.pexels.com/photos/6076115/pexels-photo-6076115.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Meera" class="w-12 h-12 rounded-full object-cover" />
                 <div>
-                  <div class="font-semibold">Meera Iyer · Lender</div>
+                  <div class="font-semibold" data-i18n="meera_role">Meera Iyer · Lender</div>
                   <div class="text-xs text-ink/55">lender@equiflow.demo · Demo@1234</div>
                 </div>
               </div>
             </button>
           </div>
-          <p class="mt-4 text-xs text-ink/45 leading-relaxed">
+          <p class="mt-4 text-xs text-ink/45 leading-relaxed" data-i18n="demo_click_hint">
             Click a card to fill credentials, then Continue. Or use the buttons below to jump straight in.
           </p>
           <div class="mt-3 flex flex-wrap gap-2">
-            <button type="button" id="quick-farmer" class="eq-btn eq-btn-ghost text-sm px-4 py-2">Enter as farmer</button>
-            <button type="button" id="quick-lender" class="eq-btn eq-btn-ghost text-sm px-4 py-2">Enter as lender</button>
-            <button type="button" id="load-demo" class="eq-btn eq-btn-ghost text-sm px-4 py-2">Load demo data</button>
+            <button type="button" id="quick-farmer" class="eq-btn eq-btn-ghost text-sm px-4 py-2" data-i18n="enter_as_farmer">Enter as farmer</button>
+            <button type="button" id="quick-lender" class="eq-btn eq-btn-ghost text-sm px-4 py-2" data-i18n="enter_as_lender">Enter as lender</button>
+            <button type="button" id="load-demo" class="eq-btn eq-btn-ghost text-sm px-4 py-2" data-i18n="load_demo_data">Load demo data</button>
           </div>
         </div>
       </div>
@@ -154,17 +167,19 @@
   <footer class="relative z-10 border-t border-ink/10 bg-sand/40 py-3.5 px-4 sm:px-6 shrink-0">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink/70">
       <div class="flex items-center gap-2">
-        <span class="px-2.5 py-0.5 rounded bg-forest text-cream font-mono font-medium text-[11px]">Judge Demo Script</span>
-        <span>1. Log in as lender &rarr; Click borrower under review &rarr; Approve adaptive relief &rarr; 2. Log in as farmer &rarr; see instant live updated EMI!</span>
+        <span class="px-2.5 py-0.5 rounded bg-forest text-cream font-mono font-medium text-[11px]" data-i18n="judge_script_title">Judge Demo Script</span>
+        <span data-i18n="judge_script_text">1. Log in as lender &rarr; Click borrower under review &rarr; Approve adaptive relief &rarr; 2. Log in as farmer &rarr; see instant live updated EMI!</span>
       </div>
       <div class="flex items-center gap-4 text-ink/50">
-        <span>100% Free Stack • No Build Tools • Zero Backend Failure Risk</span>
+        <span data-i18n="footer_stack_note">100% Free Stack • No Build Tools • Zero Backend Failure Risk</span>
       </div>
     </div>
   </footer>
 
   <script src="shared/mockData.js"></script>
   <script src="shared/adaptiveEngine.js"></script>
+  <script src="shared/i18n.js"></script>
+  <script src="shared/i18nEngine.js"></script>
   <script src="shared/supabaseClient.js"></script>
   <script>
     lucide.createIcons();
@@ -208,7 +223,7 @@
     });
     document.getElementById("load-demo").addEventListener("click", async function () {
       await eq.resetDemo();
-      eq.toast("Demo book loaded · Feb 2026 · farmer@ / lender@ + Demo@1234");
+      eq.toast(EquiFlowI18n.t("toast_demo_reset"));
     });
 
     eq.getSession().then(function (res) {

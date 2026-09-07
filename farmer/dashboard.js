@@ -8,13 +8,6 @@
     paidThisCycle: false
   };
 
-  function pillClass(status) {
-    if (status === "Stable") return "status-stable";
-    if (status.indexOf("Seasonal") === 0) return "status-seasonal";
-    if (status === "Critical") return "status-critical";
-    return "status-stress";
-  }
-
   function monthLabel(iso) {
     var d = new Date(iso);
     return d.toLocaleString("en-IN", { month: "long", year: "numeric" });
@@ -40,6 +33,9 @@
       return new Date(t.txn_date).toLocaleString("en-IN", { month: "short", year: "2-digit" });
     });
 
+    var incLabel = window.EquiFlowI18n ? EquiFlowI18n.t("income_label") : "Income";
+    var expLabel = window.EquiFlowI18n ? EquiFlowI18n.t("expenses_label") : "Expenses";
+
     if (chart) chart.destroy();
     chart = new Chart(ctx, {
       type: "line",
@@ -47,7 +43,7 @@
         labels: labels,
         datasets: [
           {
-            label: "Income",
+            label: incLabel,
             data: txns.map(function (t) { return t.income; }),
             borderColor: "#2f7a52",
             backgroundColor: g1,
@@ -57,7 +53,7 @@
             borderWidth: 2.4
           },
           {
-            label: "Expenses",
+            label: expLabel,
             data: txns.map(function (t) { return t.expenses; }),
             borderColor: "#c45c3e",
             backgroundColor: g2,
@@ -89,7 +85,7 @@
   function renderFeed(notes) {
     var el = document.getElementById("feed");
     if (!notes.length) {
-      el.innerHTML = '<p class="text-sm text-ink/50">No adjustments yet.</p>';
+      el.innerHTML = '<p class="text-sm text-ink/50" data-i18n="no_adjustments">' + EquiFlowI18n.t("no_adjustments") + '</p>';
       return;
     }
     el.innerHTML = notes.slice(0, 8).map(function (n) {
@@ -104,20 +100,23 @@
     var profile = window.EQ_PROFILE;
     var loan = await eq.getLoanForFarmer(profile.id);
     var asOf = eq.getAsOf();
-    document.getElementById("hello").textContent = "Namaste, " + (profile.full_name.split(" ")[0]) + ".";
+    var lang = EquiFlowI18n ? EquiFlowI18n.getLang() : "en";
+
+    document.getElementById("hello").textContent = (EquiFlowI18n.t("farmer_greeting") || "Namaste") + ", " + (profile.full_name.split(" ")[0]) + ".";
     document.getElementById("subhello").textContent =
       (profile.occupation || "Borrower") + (profile.location ? " · " + profile.location : "");
-    document.getElementById("asof-label").textContent = "Showing cash flow through " + monthLabel(asOf);
+    document.getElementById("asof-label").textContent = EquiFlowI18n.t("showing_cashflow_through") + " " + monthLabel(asOf);
 
     if (!loan) {
-      document.getElementById("health-status").textContent = "No loan yet";
-      document.getElementById("why-message").textContent =
-        "This account has no seeded loan. Use Reset demo on a judge account (farmer@equiflow.demo) to explore the full story.";
+      document.getElementById("health-status").textContent = "—";
+      document.getElementById("why-message").textContent = "This account has no seeded loan.";
       return;
     }
 
     var txns = await eq.getTransactions(profile.id);
-    var analysis = EquiFlowEngine.analyzeCashFlow(txns, loan.base_emi);
+    var rawAnalysis = EquiFlowEngine.analyzeCashFlow(txns, loan.base_emi);
+    var analysis = EquiFlowI18nEngine ? EquiFlowI18nEngine.localizeAnalysis(rawAnalysis, lang) : rawAnalysis;
+
     var plan = eq.latestPlan(loan.id);
     var approved = !!(plan && plan.status === "approved");
     var effective = approved ? Number(plan.recommended_emi) : analysis.recommendedEMI;
@@ -127,14 +126,21 @@
     state.effectiveEMI = effective;
     state.plan = plan;
 
-    document.getElementById("health-status").textContent = analysis.status;
-    document.getElementById("risk-label").textContent = analysis.riskLevel + " risk";
+    var statusKey = "status_stable";
+    if (analysis.status.indexOf("Seasonal") === 0) statusKey = "status_seasonal";
+    else if (analysis.status === "Financial Stress") statusKey = "status_stress";
+    else if (analysis.status === "Critical") statusKey = "status_critical";
+
+    var riskKey = "risk_normal";
+    if (analysis.riskLevel === "Low") riskKey = "risk_low";
+    else if (analysis.riskLevel === "Medium") riskKey = "risk_medium";
+    else if (analysis.riskLevel === "High") riskKey = "risk_high";
+
+    document.getElementById("health-status").textContent = EquiFlowI18n.t(statusKey);
+    document.getElementById("risk-label").textContent = EquiFlowI18n.t(riskKey);
     var traffic = document.getElementById("traffic");
     traffic.className = "traffic traffic-" + analysis.riskLevel;
-    var battery = document.getElementById("battery");
-    if (battery) battery.setAttribute("data-level", analysis.riskLevel);
 
-    // Segmented 3-bar battery visual updates
     var seg1 = document.getElementById("seg-1");
     var seg2 = document.getElementById("seg-2");
     var seg3 = document.getElementById("seg-3");
@@ -144,37 +150,35 @@
       seg1.className = "segment bg-leaf";
       seg2.className = "segment bg-leaf";
       seg3.className = "segment bg-leaf";
-      if (capLabel) { capLabel.textContent = "Full Buffer (100%)"; capLabel.className = "font-semibold text-leaf"; }
+      if (capLabel) { capLabel.textContent = EquiFlowI18n.t("capacity_full"); capLabel.className = "font-semibold text-leaf"; }
     } else if (analysis.riskLevel === "Low") {
       seg1.className = "segment bg-gold";
       seg2.className = "segment bg-gold";
       seg3.className = "segment bg-gold/30";
-      if (capLabel) { capLabel.textContent = "Seasonal Protection (75%)"; capLabel.className = "font-semibold text-gold"; }
+      if (capLabel) { capLabel.textContent = EquiFlowI18n.t("capacity_seasonal"); capLabel.className = "font-semibold text-gold"; }
     } else if (analysis.riskLevel === "Medium") {
       seg1.className = "segment bg-amber-600";
       seg2.className = "segment bg-amber-600";
       seg3.className = "segment bg-amber-600/25";
-      if (capLabel) { capLabel.textContent = "Tight Cash (50%)"; capLabel.className = "font-semibold text-amber-700"; }
+      if (capLabel) { capLabel.textContent = EquiFlowI18n.t("capacity_tight"); capLabel.className = "font-semibold text-amber-700"; }
     } else {
       seg1.className = "segment bg-clay";
       seg2.className = "segment bg-clay/30";
       seg3.className = "segment bg-clay/20";
-      if (capLabel) { capLabel.textContent = "Stress Alert (25%)"; capLabel.className = "font-semibold text-clay"; }
+      if (capLabel) { capLabel.textContent = EquiFlowI18n.t("capacity_stress"); capLabel.className = "font-semibold text-clay"; }
     }
 
-    var hints = {
-      Normal: "Green band — income is inside your usual range.",
-      Low: "Gold band — a seasonal investment dip, not distress.",
-      Medium: "Amber — genuine squeeze. Payment is halved this cycle.",
-      High: "Red — persistent stress. A restructuring talk is due."
-    };
-    document.getElementById("health-hint").textContent = hints[analysis.riskLevel] || "";
+    var hintKey = "health_hint_normal";
+    if (analysis.riskLevel === "Low") hintKey = "health_hint_low";
+    else if (analysis.riskLevel === "Medium") hintKey = "health_hint_medium";
+    else if (analysis.riskLevel === "High") hintKey = "health_hint_high";
+    document.getElementById("health-hint").textContent = EquiFlowI18n.t(hintKey);
 
     document.getElementById("emi-amount").textContent = formatINR(effective);
     document.getElementById("base-emi").textContent = formatINR(loan.base_emi);
     document.getElementById("emi-note").textContent = approved
-      ? "approved by your lender"
-      : (effective < loan.base_emi ? "auto-adjusted down" : "on schedule");
+      ? EquiFlowI18n.t("note_approved")
+      : (effective < loan.base_emi ? EquiFlowI18n.t("note_auto_adjusted") : EquiFlowI18n.t("note_on_schedule"));
     document.getElementById("approved-banner").classList.toggle("hidden", !approved);
 
     document.getElementById("loan-product").textContent = loan.product || "Microloan";
@@ -185,13 +189,13 @@
     if (analysis.microPulse) {
       mp.classList.remove("hidden");
       document.getElementById("micropulse-text").textContent =
-        "Pay " + formatINR(analysis.microPulse) + " each week (~12% of a typical week’s income) instead of a lump EMI. Low pressure, keeps the loan healthy.";
+        formatINR(analysis.microPulse) + " / week";
     } else {
       mp.classList.add("hidden");
     }
 
     document.getElementById("why-message").textContent = analysis.message;
-    document.getElementById("why-action").textContent = "For your lender: " + analysis.suggestedAction;
+    document.getElementById("why-action").textContent = EquiFlowI18n.t("for_your_lender") + " " + analysis.suggestedAction;
 
     var payments = await eq.getPayments(profile.id);
     var ck = cycleKey(asOf);
@@ -203,7 +207,7 @@
 
     drawChart(txns);
     renderFeed(await eq.getNotifications(profile.id));
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
   }
 
   function openPay() {
@@ -224,13 +228,13 @@
     document.getElementById("btn-simulate").addEventListener("click", async function () {
       var res = await eq.simulateNextMonth();
       if (!res.ok) { eq.toast(res.message, "warn"); return; }
-      eq.toast("Advanced to " + monthLabel(res.as_of));
+      eq.toast(EquiFlowI18n.t("toast_advanced_to") + " " + monthLabel(res.as_of));
       await render();
     });
 
     document.getElementById("btn-reset").addEventListener("click", async function () {
       await eq.resetDemo();
-      eq.toast("Demo data reset to February 2026");
+      eq.toast(EquiFlowI18n.t("toast_demo_reset"));
       await render();
     });
 
@@ -241,13 +245,15 @@
     document.getElementById("pay-confirm").addEventListener("click", async function () {
       document.getElementById("pay-modal").classList.add("hidden");
       await eq.recordPayment(window.EQ_PROFILE.id, state.loan.id, state.effectiveEMI);
-      eq.toast("Simulated payment of " + formatINR(state.effectiveEMI) + " recorded");
+      eq.toast("Payment recorded: " + formatINR(state.effectiveEMI));
       await render();
     });
 
+    document.addEventListener("i18n:changed", function () { render(); });
     eq.subscribe(function () { render(); });
     render();
   }
+
   document.addEventListener("eq:ready", start);
   if (window.EQ_PROFILE) start();
 })();

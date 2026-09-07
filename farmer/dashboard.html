@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EquiFlow — Borrower</title>
+  <title data-i18n="brand_name">EquiFlow — Borrower</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -38,15 +39,25 @@
           <i data-lucide="waves" class="w-4 h-4"></i>
         </div>
         <span class="font-display text-xl">EquiFlow</span>
-        <span class="hidden sm:inline text-xs uppercase tracking-widest text-ink/40 ml-2">Borrower</span>
+        <span class="hidden sm:inline text-xs uppercase tracking-widest text-ink/40 ml-2" data-i18n="nav_borrower">Borrower</span>
       </div>
       <div class="flex items-center gap-2">
-        <button id="btn-reset" class="eq-btn eq-btn-ghost text-xs px-3 py-2 hidden sm:inline-flex">Reset demo</button>
+        <button id="btn-reset" class="eq-btn eq-btn-ghost text-xs px-3 py-2 hidden sm:inline-flex" data-i18n="btn_reset_demo">Reset demo</button>
         <button id="btn-simulate" class="eq-btn eq-btn-gold text-sm px-4 py-2">
           <i data-lucide="play" class="w-4 h-4"></i>
-          Simulate next month
+          <span data-i18n="btn_simulate_next">Simulate next month</span>
         </button>
-        <button id="btn-logout" class="eq-btn eq-btn-ghost text-sm px-3 py-2">
+
+        <!-- Language Switcher in Header -->
+        <div class="relative">
+          <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2">
+            <i data-lucide="languages" class="w-4 h-4"></i>
+            <span id="lang-current">EN</span>
+          </button>
+          <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 eq-card p-1.5 z-50 shadow-lg"></div>
+        </div>
+
+        <button id="btn-logout" class="eq-btn eq-btn-ghost text-sm px-3 py-2" title="Logout">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
@@ -56,13 +67,13 @@
   <main class="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-6">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p class="text-ink/50 text-sm" id="asof-label">Current cycle</p>
+        <p class="text-ink/50 text-sm" id="asof-label" data-i18n="current_cycle">Current cycle</p>
         <h1 class="font-display text-3xl md:text-4xl" id="hello">Namaste</h1>
-        <p class="text-ink/60" id="subhello">Your repayment follows the land, not a calendar.</p>
+        <p class="text-ink/60" id="subhello" data-i18n="farmer_subgreeting">Your repayment follows the land, not a calendar.</p>
       </div>
       <div id="approved-banner" class="hidden eq-card px-4 py-3 text-sm border-leaf">
-        <span class="font-semibold text-leaf">Lender approved this cycle.</span>
-        <span class="text-ink/60"> The amount below is live.</span>
+        <span class="font-semibold text-leaf" data-i18n="approved_banner_title">Lender approved this cycle.</span>
+        <span class="text-ink/60" data-i18n="approved_banner_sub"> The amount below is live.</span>
       </div>
     </div>
 
@@ -71,7 +82,7 @@
       <article class="eq-card p-6">
         <div class="flex items-center justify-between mb-3">
           <div>
-            <p class="text-xs uppercase tracking-widest text-ink/45">Financial health</p>
+            <p class="text-xs uppercase tracking-widest text-ink/45" data-i18n="financial_health_title">Financial health</p>
             <h2 class="font-display text-2xl mt-1" id="health-status">—</h2>
           </div>
           <div class="flex items-center gap-2">
@@ -83,8 +94,8 @@
         <!-- 3-Segment Horizontal Battery Bar -->
         <div class="my-3 space-y-1.5">
           <div class="flex justify-between text-[11px] text-ink/60 font-medium">
-            <span>Repayment Capacity</span>
-            <span id="capacity-label" class="font-semibold text-leaf">Normal Buffer</span>
+            <span data-i18n="repayment_capacity">Repayment Capacity</span>
+            <span id="capacity-label" class="font-semibold text-leaf">Full Buffer (100%)</span>
           </div>
           <div class="battery-segmented" id="segmented-battery">
             <div id="seg-1" class="segment bg-leaf"></div>
@@ -93,41 +104,41 @@
           </div>
         </div>
 
-        <p class="mt-4 text-xs text-ink/60" id="health-hint">Meter fills with cash-flow strength.</p>
+        <p class="mt-4 text-xs text-ink/60" id="health-hint" data-i18n="health_hint_default">Meter fills with cash-flow strength.</p>
       </article>
 
       <article class="eq-card-dark p-6 relative overflow-hidden">
-        <p class="text-xs uppercase tracking-widest text-cream/50">Recommended this cycle</p>
+        <p class="text-xs uppercase tracking-widest text-cream/50" data-i18n="recommended_this_cycle">Recommended this cycle</p>
         <div class="num-xl text-5xl mt-2 text-gold" id="emi-amount">₹—</div>
         <p class="text-cream/60 text-sm mt-1">
-          Base EMI <span id="base-emi">₹—</span>
+          <span data-i18n="base_emi_label">Base EMI</span> <span id="base-emi">₹—</span>
           · <span id="emi-note">waiting</span>
         </p>
         <div class="mt-6 flex flex-wrap gap-2">
           <button id="btn-pay" class="eq-btn eq-btn-gold px-5 py-2.5">
             <i data-lucide="wallet" class="w-4 h-4"></i>
-            Pay now
+            <span data-i18n="btn_pay_now">Pay now</span>
           </button>
-          <span class="text-[11px] text-cream/50 self-center">Simulated · no gateway</span>
+          <span class="text-[11px] text-cream/50 self-center" data-i18n="simulated_no_gateway">Simulated · no gateway</span>
         </div>
-        <p id="paid-flag" class="hidden mt-3 text-sm text-gold">Paid for this cycle (simulated).</p>
+        <p id="paid-flag" class="hidden mt-3 text-sm text-gold" data-i18n="paid_flag">Paid for this cycle (simulated).</p>
       </article>
 
       <article class="eq-card p-6">
-        <p class="text-xs uppercase tracking-widest text-ink/45">Loan snapshot</p>
+        <p class="text-xs uppercase tracking-widest text-ink/45" data-i18n="loan_snapshot">Loan snapshot</p>
         <h3 class="font-display text-xl mt-1" id="loan-product">—</h3>
         <dl class="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div>
-            <dt class="text-ink/45">Outstanding</dt>
+            <dt class="text-ink/45" data-i18n="outstanding_label">Outstanding</dt>
             <dd class="font-semibold text-lg" id="outstanding">—</dd>
           </div>
           <div>
-            <dt class="text-ink/45">Principal</dt>
+            <dt class="text-ink/45" data-i18n="principal_label">Principal</dt>
             <dd class="font-semibold text-lg" id="principal">—</dd>
           </div>
         </dl>
         <div id="micropulse" class="mt-4 p-3 rounded-xl bg-mint/70 hidden">
-          <p class="text-xs uppercase tracking-wider text-forest font-semibold">MicroPulse</p>
+          <p class="text-xs uppercase tracking-wider text-forest font-semibold" data-i18n="micropulse_label">MicroPulse</p>
           <p class="text-sm mt-1" id="micropulse-text"></p>
         </div>
       </article>
@@ -137,12 +148,12 @@
       <article class="eq-card p-6 lg:col-span-2">
         <div class="flex items-center justify-between mb-4">
           <div>
-            <p class="text-xs uppercase tracking-widest text-ink/45">Cash flow</p>
-            <h3 class="font-display text-xl">Income vs expenses</h3>
+            <p class="text-xs uppercase tracking-widest text-ink/45" data-i18n="cash_flow_title">Cash flow</p>
+            <h3 class="font-display text-xl" data-i18n="income_vs_expenses">Income vs expenses</h3>
           </div>
           <div class="flex gap-4 text-xs">
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-leaf"></span>Income</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-clay"></span>Expenses</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-leaf"></span><span data-i18n="income_label">Income</span></span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-clay"></span><span data-i18n="expenses_label">Expenses</span></span>
           </div>
         </div>
         <div class="h-72">
@@ -153,15 +164,15 @@
       <article class="eq-card p-6">
         <div class="flex items-center gap-2 mb-4">
           <i data-lucide="bell" class="w-4 h-4"></i>
-          <h3 class="font-display text-xl">Adjustments</h3>
+          <h3 class="font-display text-xl" data-i18n="adjustments_title">Adjustments</h3>
         </div>
         <div id="feed" class="space-y-3 max-h-72 overflow-y-auto pr-1"></div>
       </article>
     </section>
 
     <article class="eq-card p-6 md:p-8">
-      <p class="text-xs uppercase tracking-widest text-ink/45">Why this amount</p>
-      <h3 class="font-display text-2xl mt-1 mb-3">Plain-English explanation</h3>
+      <p class="text-xs uppercase tracking-widest text-ink/45" data-i18n="why_this_amount">Why this amount</p>
+      <h3 class="font-display text-2xl mt-1 mb-3" data-i18n="plain_english_explanation">Plain-language explanation</h3>
       <p id="why-message" class="text-ink/80 leading-relaxed max-w-4xl">—</p>
       <p id="why-action" class="mt-4 text-sm text-forest font-medium">—</p>
     </article>
@@ -169,19 +180,21 @@
 
   <div id="pay-modal" class="modal-backdrop hidden">
     <div class="eq-card max-w-md w-full p-6">
-      <p class="text-xs uppercase tracking-widest text-gold font-semibold">Simulated payment</p>
-      <h3 class="font-display text-2xl mt-1">No real money will move.</h3>
-      <p class="text-ink/65 mt-2 text-sm">This logs a demo repayment so judges can see the outstanding balance and feed update. It is not a payment gateway.</p>
+      <p class="text-xs uppercase tracking-widest text-gold font-semibold" data-i18n="modal_simulated_title">Simulated payment</p>
+      <h3 class="font-display text-2xl mt-1" data-i18n="modal_simulated_heading">No real money will move.</h3>
+      <p class="text-ink/65 mt-2 text-sm" data-i18n="modal_simulated_desc">This logs a demo repayment so judges can see the outstanding balance and feed update. It is not a payment gateway.</p>
       <p class="num-xl text-3xl mt-4" id="modal-amount">₹—</p>
       <div class="mt-6 flex gap-2 justify-end">
-        <button id="pay-cancel" class="eq-btn eq-btn-ghost px-4 py-2">Cancel</button>
-        <button id="pay-confirm" class="eq-btn eq-btn-primary px-5 py-2">Record payment</button>
+        <button id="pay-cancel" class="eq-btn eq-btn-ghost px-4 py-2" data-i18n="btn_cancel">Cancel</button>
+        <button id="pay-confirm" class="eq-btn eq-btn-primary px-5 py-2" data-i18n="btn_record_payment">Record payment</button>
       </div>
     </div>
   </div>
 
   <script src="../shared/mockData.js"></script>
   <script src="../shared/adaptiveEngine.js"></script>
+  <script src="../shared/i18n.js"></script>
+  <script src="../shared/i18nEngine.js"></script>
   <script src="../shared/supabaseClient.js"></script>
   <script src="../shared/authGuard.js"></script>
   <script src="dashboard.js"></script>

@@ -43,6 +43,11 @@ body {
 
 .font-display { font-family: Fraunces, Georgia, serif; }
 
+[data-script="devanagari"] body, [data-script="devanagari"] .font-display { font-family: "Noto Sans Devanagari", Outfit, sans-serif; }
+[data-script="tamil"] body, [data-script="tamil"] .font-display { font-family: "Noto Sans Tamil", Outfit, sans-serif; }
+[data-script="telugu"] body, [data-script="telugu"] .font-display { font-family: "Noto Sans Telugu", Outfit, sans-serif; }
+[data-script="bengali"] body, [data-script="bengali"] .font-display { font-family: "Noto Sans Bengali", Outfit, sans-serif; }
+
 .eq-grain {
   position: relative;
 }

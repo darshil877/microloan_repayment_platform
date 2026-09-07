@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EquiFlow — Lender</title>
+  <title data-i18n="brand_name">EquiFlow — Lender</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -38,15 +39,25 @@
           <i data-lucide="waves" class="w-4 h-4"></i>
         </div>
         <span class="font-display text-xl">EquiFlow</span>
-        <span class="hidden sm:inline text-xs uppercase tracking-widest text-ink/40 ml-2">Lender desk</span>
+        <span class="hidden sm:inline text-xs uppercase tracking-widest text-ink/40 ml-2" data-i18n="nav_lender">Lender desk</span>
       </div>
       <div class="flex items-center gap-2">
-        <button id="btn-reset" class="eq-btn eq-btn-ghost text-xs px-3 py-2 hidden sm:inline-flex">Reset demo</button>
+        <button id="btn-reset" class="eq-btn eq-btn-ghost text-xs px-3 py-2 hidden sm:inline-flex" data-i18n="btn_reset_demo">Reset demo</button>
         <button id="btn-simulate" class="eq-btn eq-btn-gold text-sm px-4 py-2">
           <i data-lucide="play" class="w-4 h-4"></i>
-          Simulate next month
+          <span data-i18n="btn_simulate_next">Simulate next month</span>
         </button>
-        <button id="btn-logout" class="eq-btn eq-btn-ghost text-sm px-3 py-2">
+
+        <!-- Language Switcher in Header -->
+        <div class="relative">
+          <button id="lang-toggle" type="button" class="eq-btn eq-btn-ghost text-sm px-3 py-2">
+            <i data-lucide="languages" class="w-4 h-4"></i>
+            <span id="lang-current">EN</span>
+          </button>
+          <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 eq-card p-1.5 z-50 shadow-lg"></div>
+        </div>
+
+        <button id="btn-logout" class="eq-btn eq-btn-ghost text-sm px-3 py-2" title="Logout">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
@@ -56,9 +67,9 @@
   <main class="max-w-[1440px] mx-auto px-4 md:px-8 py-8">
     <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
       <div>
-        <p class="text-ink/50 text-sm" id="asof-label">Portfolio cycle</p>
-        <h1 class="font-display text-3xl md:text-4xl" id="hello">Portfolio</h1>
-        <p class="text-ink/60">Seasonal dip is not default. Approve the amount the cash flow can actually bear.</p>
+        <p class="text-ink/50 text-sm" id="asof-label" data-i18n="portfolio_cycle">Portfolio cycle</p>
+        <h1 class="font-display text-3xl md:text-4xl" id="hello" data-i18n="portfolio_title">Portfolio</h1>
+        <p class="text-ink/60" data-i18n="portfolio_sub">Seasonal dip is not default. Approve the amount the cash flow can actually bear.</p>
       </div>
     </div>
 
@@ -67,16 +78,16 @@
     <section class="grid xl:grid-cols-5 gap-5">
       <article class="eq-card xl:col-span-2 overflow-hidden">
         <div class="p-5 border-b border-ink/10 flex items-center justify-between">
-          <h2 class="font-display text-xl">Borrowers</h2>
+          <h2 class="font-display text-xl" data-i18n="table_borrowers">Borrowers</h2>
           <span class="text-xs text-ink/45" id="borrower-count"></span>
         </div>
         <div class="table-wrap">
           <table class="eq-table w-full">
             <thead>
               <tr>
-                <th class="text-left p-3 text-xs uppercase text-ink/50">Name</th>
-                <th class="text-left p-3 text-xs uppercase text-ink/50">Status</th>
-                <th class="text-left p-3 text-xs uppercase text-ink/50">Due</th>
+                <th class="text-left p-3 text-xs uppercase text-ink/50" data-i18n="th_name">Name</th>
+                <th class="text-left p-3 text-xs uppercase text-ink/50" data-i18n="th_status">Status</th>
+                <th class="text-left p-3 text-xs uppercase text-ink/50" data-i18n="th_due">Due</th>
               </tr>
             </thead>
             <tbody id="borrower-body"></tbody>
@@ -87,8 +98,8 @@
       <article class="eq-card xl:col-span-3 p-6 min-h-[520px]" id="detail">
         <div class="h-full flex flex-col items-center justify-center text-center text-ink/50 py-16">
           <i data-lucide="users" class="w-8 h-8 mb-3"></i>
-          <p class="font-display text-2xl text-ink">Select a borrower</p>
-          <p class="max-w-sm mt-2">Open a row to see cash flow, the plain-English reason, and a one-click recommendation of how much to collect — and when.</p>
+          <p class="font-display text-2xl text-ink" data-i18n="select_borrower_title">Select a borrower</p>
+          <p class="max-w-sm mt-2" data-i18n="select_borrower_sub">Open a row to see cash flow, the plain-language reason, and a one-click recommendation of how much to collect — and when.</p>
         </div>
       </article>
     </section>
@@ -96,6 +107,8 @@
 
   <script src="../shared/mockData.js"></script>
   <script src="../shared/adaptiveEngine.js"></script>
+  <script src="../shared/i18n.js"></script>
+  <script src="../shared/i18nEngine.js"></script>
   <script src="../shared/supabaseClient.js"></script>
   <script src="../shared/authGuard.js"></script>
   <script src="dashboard.js"></script>

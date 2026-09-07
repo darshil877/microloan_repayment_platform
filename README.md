@@ -47,6 +47,15 @@ First visit auto-seeds local demo data (February 2026). **Reset demo** on either
 
 ---
 
+## Multi-Language Support (7 Languages)
+
+EquiFlow features a pure client-side internationalization system (`shared/i18n.js` & `shared/i18nEngine.js`) supporting **English, Hindi, Marathi, Marwadi, Tamil, Telugu, and Bengali**.
+Language choices persist across page navigation via `localStorage`.
+
+> **Note on Marwadi Translation**: Marwadi (`mwr`) translations are a best-effort first draft and have not been reviewed by a native speaker. Recommend review before relying on them in front of judges or real users.
+
+---
+
 ## Run locally
 
 Any static server from the repo root:
