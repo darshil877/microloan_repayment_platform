@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EquiFlow — Lender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#12241c", forest: "#143d2e", leaf: "#2f7a52",
+            cream: "#f3eee4", gold: "#c4a046", clay: "#c45c3e", sand: "#e4d7c3"
+          },
+          fontFamily: { display: ["Fraunces", "serif"], sans: ["Outfit", "system-ui", "sans-serif"] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="../shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-role="lender" class="font-sans bg-cream text-ink min-h-screen">
+  <div id="boot">
+    <div class="font-display text-3xl">EquiFlow</div>
+    <div class="text-cream/60 text-sm">Opening the book…</div>
+  </div>
+
+  <header class="sticky top-0 z-40 backdrop-blur bg-cream/80 border-b border-ink/10">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-forest text-cream flex items-center justify-center">
+          <i data-lucide="waves" class="w-4 h-4"></i>
+        </div>
+        <span class="font-display text-xl">EquiFlow</span>
+        <span class="hidden sm:inline text-xs uppercase tracking-widest text-ink/40 ml-2">Lender desk</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btn-reset" class="eq-btn eq-btn-ghost text-xs px-3 py-2 hidden sm:inline-flex">Reset demo</button>
+        <button id="btn-simulate" class="eq-btn eq-btn-gold text-sm px-4 py-2">
+          <i data-lucide="play" class="w-4 h-4"></i>
+          Simulate next month
+        </button>
+        <button id="btn-logout" class="eq-btn eq-btn-ghost text-sm px-3 py-2">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1440px] mx-auto px-4 md:px-8 py-8">
+    <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+      <div>
+        <p class="text-ink/50 text-sm" id="asof-label">Portfolio cycle</p>
+        <h1 class="font-display text-3xl md:text-4xl" id="hello">Portfolio</h1>
+        <p class="text-ink/60">Seasonal dip is not default. Approve the amount the cash flow can actually bear.</p>
+      </div>
+    </div>
+
+    <section class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="kpis"></section>
+
+    <section class="grid xl:grid-cols-5 gap-5">
+      <article class="eq-card xl:col-span-2 overflow-hidden">
+        <div class="p-5 border-b border-ink/10 flex items-center justify-between">
+          <h2 class="font-display text-xl">Borrowers</h2>
+          <span class="text-xs text-ink/45" id="borrower-count"></span>
+        </div>
+        <div class="table-wrap">
+          <table class="eq-table w-full">
+            <thead>
+              <tr>
+                <th class="text-left p-3 text-xs uppercase text-ink/50">Name</th>
+                <th class="text-left p-3 text-xs uppercase text-ink/50">Status</th>
+                <th class="text-left p-3 text-xs uppercase text-ink/50">Due</th>
+              </tr>
+            </thead>
+            <tbody id="borrower-body"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="eq-card xl:col-span-3 p-6 min-h-[520px]" id="detail">
+        <div class="h-full flex flex-col items-center justify-center text-center text-ink/50 py-16">
+          <i data-lucide="users" class="w-8 h-8 mb-3"></i>
+          <p class="font-display text-2xl text-ink">Select a borrower</p>
+          <p class="max-w-sm mt-2">Open a row to see cash flow, the plain-English reason, and a one-click recommendation of how much to collect — and when.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../shared/mockData.js"></script>
+  <script src="../shared/adaptiveEngine.js"></script>
+  <script src="../shared/supabaseClient.js"></script>
+  <script src="../shared/authGuard.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+# EquiFlow
+
+Adaptive microloan repayment for irregular income — harvests, lean months, gig spikes.
+
+Hackathon theme: **Decent Work and Economic Growth (UN SDG 8)**.
+
+Borrowers don’t fail EMIs; calendars fail borrowers. EquiFlow reads cash-flow patterns, tells the difference between a **seasonal investment dip** and **real financial stress**, writes a plain-English recommendation, and lets the lender approve a new due amount in one click.
+
+No build step. No paid APIs. No server to babysit.
+
+---
+
+## Demo logins (judges — use these)
+
+| Role | Email | Password | Person |
+|---|---|---|---|
+| Farmer / borrower | `farmer@equiflow.demo` | `Demo@1234` | Ramesh Patel, Nashik (sugarcane & onion) |
+| Lender | `lender@equiflow.demo` | `Demo@1234` | Meera Iyer, Grameen Trust |
+
+The book also includes **Priya Sharma** (gig delivery, Pune) as a second borrower on the lender desk. Priya comes pre-seeded with a lender-approved adaptive plan so judges can see an approved example immediately, while Ramesh remains pending for live review.
+
+First visit auto-seeds local demo data (February 2026). **Reset demo** on either dashboard restores that month.
+
+---
+
+## Judge script (60–90 seconds)
+
+1. Open the site. Click **Enter as lender** (or sign in with `lender@equiflow.demo` / `Demo@1234`).
+2. You land in **February 2026**. Ramesh Patel is in **Financial Stress** (lean month, no planting spend, pending review). Priya Sharma is **Approved**.
+3. Click **Ramesh**. Read the plain-English *Why* panel, inspect the 3-series cash flow chart (Income line, Total Expenses bar, Farming Outlays bar), and see the recommendation.
+4. Click **Approve recommendation**. The plan is written to `repayment_plans`.
+5. Open a second tab → login page → **Enter as farmer**. Ramesh’s dashboard now shows the **lender-approved** lower amount, a green banner, and a feed notification.
+6. On either desk, click **Simulate next month**:
+   - **March** → Ramesh flips to **Seasonal Dip (Investment Phase)** (farming expenses > 40%). EMI drops to ~30% of base. This is the “not a default, it’s planting week” moment.
+   - **April** → harvest spike, status **Stable**, EMI returns to base.
+
+---
+
+## Stack
+
+- Plain HTML + CSS + vanilla JS (multi-page, no SPA router)
+- Tailwind CSS via CDN
+- Chart.js via CDN
+- Lucide icons via CDN
+- Data/auth: **in-browser mock** that mirrors Supabase (`localStorage` + `BroadcastChannel`).
+- Hosting: Cloudflare Pages, framework preset **None**, empty build command, output directory `/`
+
+---
+
+## Run locally
+
+Any static server from the repo root:
+
+```bash
+python3 -m http.server 8080
+# or
+npx --yes serve -p 8080
+```
+
+Open http://localhost:8080
+
+---
+
+## Deploy (GitHub → Cloudflare Pages)
+
+1. Push this folder to GitHub.
+2. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → Connect to GitHub → select the repo.
+3. **Framework preset:** None  
+   **Build command:** *(leave empty)*  
+   **Build output directory:** `/`
+4. Deploy. No environment variables required for the mock.
+
+---
+
+## File structure
+
+```
+microloan_repayment_platform/
+├── index.html                 # Login + Judge Pitch + SDG 8
+├── signup.html                # Signup + Farmer / Lender role
+├── farmer/
+│   ├── dashboard.html
+│   └── dashboard.js
+├── lender/
+│   ├── dashboard.html
+│   └── dashboard.js
+├── shared/
+│   ├── supabaseClient.js      # Init + mock database
+│   ├── authGuard.js           # Session + role redirect
+│   ├── adaptiveEngine.js      # Cash-flow engine (deterministic JS)
+│   ├── mockData.js            # Seeded farmer + gig-worker book
+│   └── style.css
+└── README.md
+```
+
+---
+
+## Supabase schema (if you switch off the mock)
+
+```sql
+-- profiles
+create table public.profiles (
+  id uuid primary key references auth.users (id) on delete cascade,
+  full_name text,
+  role text not null check (role in ('farmer', 'lender')),
+  occupation text,
+  location text,
+  avatar text,
+  created_at timestamptz default now()
+);
+
+-- loans
+create table public.loans (
+  id uuid primary key default gen_random_uuid(),
+  farmer_id uuid references public.profiles (id),
+  lender_id uuid references public.profiles (id),
+  principal numeric not null,
+  outstanding numeric,
+  base_emi numeric not null,
+  start_date date,
+  status text default 'active',
+  product text
+);
+
+-- transactions (monthly cash-flow snapshots for the demo)
+create table public.transactions (
+  id uuid primary key default gen_random_uuid(),
+  farmer_id uuid references public.profiles (id),
+  txn_date date not null,
+  income numeric not null default 0,
+  expenses numeric not null default 0,
+  farming_expenses numeric not null default 0,
+  category text
+);
+
+-- repayment_plans
+create table public.repayment_plans (
+  id uuid primary key default gen_random_uuid(),
+  loan_id uuid references public.loans (id),
+  status text,
+  risk_level text,
+  recommended_emi numeric,
+  message text,
+  suggested_action text,
+  cashflow_status text,
+  for_month text,
+  created_at timestamptz default now()
+);
+
+alter table public.profiles enable row level security;
+alter table public.loans enable row level security;
+alter table public.transactions enable row level security;
+alter table public.repayment_plans enable row level security;
+```
+

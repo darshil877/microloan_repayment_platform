@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EquiFlow — Adaptive Microloan Repayment & Cash-Flow Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#12241c", forest: "#143d2e", leaf: "#2f7a52",
+            cream: "#f3eee4", gold: "#c4a046", clay: "#c45c3e", sand: "#e4d7c3"
+          },
+          fontFamily: { display: ["Fraunces", "serif"], sans: ["Outfit", "system-ui", "sans-serif"] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="font-sans bg-cream text-ink h-screen flex flex-col overflow-hidden">
+  <div class="flex-1 min-h-0 grid lg:grid-cols-2 overflow-y-auto">
+    <!-- Left Hero column: Pitch for Judges & SDG 8 -->
+    <section class="relative min-h-[42vh] lg:min-h-screen overflow-hidden">
+      <img
+        src="https://images.pexels.com/photos/5269073/pexels-photo-5269073.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        alt="Rice paddies at dawn"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="hero-mask absolute inset-0"></div>
+      <div class="relative z-10 h-full flex flex-col p-8 md:p-12 text-cream">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gold/90 flex items-center justify-center shadow-lg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M3 15c4-8 7-8 9 0 2-8 5-8 9 0" stroke="#143d2e" stroke-width="2" stroke-linecap="round"/>
+              <path d="M3 18c4-4 7-4 9 0 2-4 5-4 9 0" stroke="#143d2e" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+            </svg>
+          </div>
+          <span class="font-display text-2xl tracking-tight">EquiFlow</span>
+        </div>
+
+        <div class="mt-auto max-w-xl pb-6 space-y-5">
+          <!-- SDG 8 Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/20 border border-gold/40 text-gold text-xs font-semibold tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+            UN SDG 8: Decent Work & Economic Growth
+          </div>
+
+          <h1 class="font-display text-4xl md:text-5xl leading-[1.12]">
+            Repayment that <em>breathes</em> with cash flow.
+          </h1>
+
+          <p class="text-cream/85 text-base md:text-lg leading-relaxed max-w-md">
+            Fixed EMIs assume a salary. Most of India doesn’t have one.
+            EquiFlow reads harvests, lean months and gig spikes — then tells the lender exactly how much to collect, and when.
+          </p>
+
+          <!-- 3 Capability Chips -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-left">
+            <div class="p-3 rounded-xl bg-forest/40 border border-cream/15 backdrop-blur-sm">
+              <i data-lucide="sprout" class="w-5 h-5 text-gold mb-1.5"></i>
+              <p class="text-xs font-semibold text-cream">Sowing Dip vs Crisis</p>
+              <p class="text-[11px] text-cream/70">Distinguishes capital input spikes from default risk.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-forest/40 border border-cream/15 backdrop-blur-sm">
+              <i data-lucide="zap" class="w-5 h-5 text-gold mb-1.5"></i>
+              <p class="text-xs font-semibold text-cream">MicroPulse Bites</p>
+              <p class="text-[11px] text-cream/70">Micro weekly payments whenever stress arises.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-forest/40 border border-cream/15 backdrop-blur-sm">
+              <i data-lucide="check-check" class="w-5 h-5 text-gold mb-1.5"></i>
+              <p class="text-xs font-semibold text-cream">1-Click Restructure</p>
+              <p class="text-[11px] text-cream/70">Zero-penalty harvest deferred recovery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Login Card Section -->
+    <section class="eq-grain flex items-center justify-center p-6 md:p-12 bg-cream">
+      <div class="w-full max-w-md relative z-10">
+        <p class="text-leaf font-medium text-sm mb-2">Welcome back</p>
+        <h2 class="font-display text-3xl mb-1">Sign in</h2>
+        <p class="text-ink/60 mb-8">One login. We route you by role — borrower or lender.</p>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Email</label>
+            <input id="email" type="email" required class="eq-input" placeholder="you@equiflow.demo" autocomplete="username" />
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Password</label>
+            <input id="password" type="password" required class="eq-input" placeholder="••••••••" autocomplete="current-password" />
+          </div>
+          <p id="login-error" class="hidden text-clay text-sm"></p>
+          <button type="submit" class="eq-btn eq-btn-primary w-full py-3.5 text-base">
+            Continue
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </form>
+
+        <p class="mt-5 text-sm text-ink/60">
+          New here?
+          <a href="signup.html" class="text-forest font-semibold underline underline-offset-4">Create an account</a>
+        </p>
+
+        <div class="mt-10">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="h-px flex-1 bg-ink/10"></div>
+            <span class="text-[11px] uppercase tracking-[0.16em] text-ink/40">Judge demo accounts</span>
+            <div class="h-px flex-1 bg-ink/10"></div>
+          </div>
+          <div class="grid gap-3">
+            <button type="button" data-demo="farmer" class="text-left eq-card p-4 hover:border-leaf transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.pexels.com/photos/20458058/pexels-photo-20458058.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Ramesh" class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <div class="font-semibold">Ramesh Patel · Farmer</div>
+                  <div class="text-xs text-ink/55">farmer@equiflow.demo · Demo@1234</div>
+                </div>
+              </div>
+            </button>
+            <button type="button" data-demo="lender" class="text-left eq-card p-4 hover:border-leaf transition">
+              <div class="flex items-center gap-3">
+                <img src="https://images.pexels.com/photos/6076115/pexels-photo-6076115.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Meera" class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <div class="font-semibold">Meera Iyer · Lender</div>
+                  <div class="text-xs text-ink/55">lender@equiflow.demo · Demo@1234</div>
+                </div>
+              </div>
+            </button>
+          </div>
+          <p class="mt-4 text-xs text-ink/45 leading-relaxed">
+            Click a card to fill credentials, then Continue. Or use the buttons below to jump straight in.
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button type="button" id="quick-farmer" class="eq-btn eq-btn-ghost text-sm px-4 py-2">Enter as farmer</button>
+            <button type="button" id="quick-lender" class="eq-btn eq-btn-ghost text-sm px-4 py-2">Enter as lender</button>
+            <button type="button" id="load-demo" class="eq-btn eq-btn-ghost text-sm px-4 py-2">Load demo data</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Live Demo Quick-Script Footer Strip for Hackathon Judges -->
+  <footer class="relative z-10 border-t border-ink/10 bg-sand/40 py-3.5 px-4 sm:px-6 shrink-0">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink/70">
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded bg-forest text-cream font-mono font-medium text-[11px]">Judge Demo Script</span>
+        <span>1. Log in as lender &rarr; Click borrower under review &rarr; Approve adaptive relief &rarr; 2. Log in as farmer &rarr; see instant live updated EMI!</span>
+      </div>
+      <div class="flex items-center gap-4 text-ink/50">
+        <span>100% Free Stack • No Build Tools • Zero Backend Failure Risk</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared/mockData.js"></script>
+  <script src="shared/adaptiveEngine.js"></script>
+  <script src="shared/supabaseClient.js"></script>
+  <script>
+    lucide.createIcons();
+
+    var form = document.getElementById("login-form");
+    var err = document.getElementById("login-error");
+
+    function showErr(msg) {
+      err.textContent = msg;
+      err.classList.remove("hidden");
+    }
+
+    async function go(email, password) {
+      err.classList.add("hidden");
+      var res = await eq.signIn(email, password);
+      if (res.error) { showErr(res.error.message); return; }
+      var profile = res.data.session.profile || await eq.getProfile(res.data.user.id);
+      if (!profile) { showErr("No profile found for this account."); return; }
+      window.location.href = eq.url(profile.role === "lender" ? "lender/dashboard.html" : "farmer/dashboard.html");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      go(document.getElementById("email").value.trim(), document.getElementById("password").value);
+    });
+
+    document.querySelectorAll("[data-demo]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var kind = btn.getAttribute("data-demo");
+        var acc = EquiFlowMock.DEMO_ACCOUNTS.filter(function (a) { return a.role === kind; })[0];
+        document.getElementById("email").value = acc.email;
+        document.getElementById("password").value = acc.password;
+      });
+    });
+
+    document.getElementById("quick-farmer").addEventListener("click", function () {
+      go("farmer@equiflow.demo", "Demo@1234");
+    });
+    document.getElementById("quick-lender").addEventListener("click", function () {
+      go("lender@equiflow.demo", "Demo@1234");
+    });
+    document.getElementById("load-demo").addEventListener("click", async function () {
+      await eq.resetDemo();
+      eq.toast("Demo book loaded · Feb 2026 · farmer@ / lender@ + Demo@1234");
+    });
+
+    eq.getSession().then(function (res) {
+      var s = res.data && res.data.session;
+      if (s && s.profile) {
+        window.location.href = eq.url(s.profile.role === "lender" ? "lender/dashboard.html" : "farmer/dashboard.html");
+      }
+    });
+  </script>
+</body>
+</html>

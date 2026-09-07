@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EquiFlow — Create account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#12241c", forest: "#143d2e", leaf: "#2f7a52",
+            cream: "#f3eee4", gold: "#c4a046", clay: "#c45c3e"
+          },
+          fontFamily: { display: ["Fraunces", "serif"], sans: ["Outfit", "system-ui", "sans-serif"] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="font-sans bg-cream text-ink min-h-screen">
+  <div class="min-h-screen grid lg:grid-cols-2">
+    <section class="relative min-h-[36vh] lg:min-h-screen overflow-hidden">
+      <img
+        src="https://images.pexels.com/photos/20445169/pexels-photo-20445169.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        alt="Farmer in a wheat field"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="hero-mask absolute inset-0"></div>
+      <div class="relative z-10 h-full flex flex-col p-8 md:p-12 text-cream">
+        <a href="index.html" class="flex items-center gap-3 w-fit">
+          <div class="w-10 h-10 rounded-full bg-gold/90 flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M3 15c4-8 7-8 9 0 2-8 5-8 9 0" stroke="#143d2e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="font-display text-2xl tracking-tight">EquiFlow</span>
+        </a>
+        <div class="mt-auto max-w-lg pb-4">
+          <h1 class="font-display text-4xl leading-tight mb-3">Join the side of the ledger you live on.</h1>
+          <p class="text-cream/80">Borrowers see a payment that respects the season. Lenders see risk that isn’t a red flag for planting week.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="eq-grain flex items-center justify-center p-6 md:p-12">
+      <div class="w-full max-w-md relative z-10">
+        <h2 class="font-display text-3xl mb-1">Create account</h2>
+        <p class="text-ink/60 mb-8">Choose a role. You can use demo data after signup, or the seeded judge accounts on the login page.</p>
+
+        <form id="signup-form" class="space-y-4">
+          <div>
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Full name</label>
+            <input id="full_name" required class="eq-input" placeholder="Your name" />
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Email</label>
+            <input id="email" type="email" required class="eq-input" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-1.5 block">Password</label>
+            <input id="password" type="password" required minlength="6" class="eq-input" placeholder="Min. 6 characters" />
+          </div>
+
+          <div>
+            <label class="text-xs uppercase tracking-wider text-ink/50 mb-2 block">I am a</label>
+            <div class="grid grid-cols-2 gap-3">
+              <label class="role-card selected" id="card-farmer">
+                <input type="radio" name="role" value="farmer" checked class="hidden" />
+                <img src="https://images.pexels.com/photos/31918457/pexels-photo-31918457.jpeg?auto=compress&cs=tinysrgb&w=600" class="h-24 w-full object-cover" alt="Farmer" />
+                <div class="p-3">
+                  <div class="font-semibold">Farmer / borrower</div>
+                  <div class="text-xs text-ink/50">Irregular income</div>
+                </div>
+              </label>
+              <label class="role-card" id="card-lender">
+                <input type="radio" name="role" value="lender" class="hidden" />
+                <img src="https://images.pexels.com/photos/6076115/pexels-photo-6076115.jpeg?auto=compress&cs=tinysrgb&w=600" class="h-24 w-full object-cover" alt="Lender" />
+                <div class="p-3">
+                  <div class="font-semibold">Lender</div>
+                  <div class="text-xs text-ink/50">Portfolio + approve</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <p id="signup-error" class="hidden text-clay text-sm"></p>
+          <button type="submit" class="eq-btn eq-btn-primary w-full py-3.5">Create account</button>
+        </form>
+        <p class="mt-5 text-sm text-ink/60">
+          Already have an account?
+          <a href="index.html" class="text-forest font-semibold underline underline-offset-4">Sign in</a>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script src="shared/mockData.js"></script>
+  <script src="shared/adaptiveEngine.js"></script>
+  <script src="shared/supabaseClient.js"></script>
+  <script>
+    lucide.createIcons();
+    var cards = [document.getElementById("card-farmer"), document.getElementById("card-lender")];
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        cards.forEach(function (c) { c.classList.remove("selected"); });
+        card.classList.add("selected");
+        card.querySelector("input").checked = true;
+      });
+    });
+
+    document.getElementById("signup-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var err = document.getElementById("signup-error");
+      err.classList.add("hidden");
+      var role = document.querySelector("input[name=role]:checked").value;
+      var res = await eq.signUp(
+        document.getElementById("email").value.trim(),
+        document.getElementById("password").value,
+        document.getElementById("full_name").value.trim(),
+        role
+      );
+      if (res.error) {
+        err.textContent = res.error.message;
+        err.classList.remove("hidden");
+        return;
+      }
+      window.location.href = eq.url(role === "lender" ? "lender/dashboard.html" : "farmer/dashboard.html");
+    });
+  </script>
+</body>
+</html>
