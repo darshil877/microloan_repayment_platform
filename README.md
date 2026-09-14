@@ -1,10 +1,10 @@
 # EquiFlow
 
-Adaptive microloan repayment for irregular income — harvests, lean months, gig spikes.
+Adaptive microloan repayment for irregular income — harvests, lean months, gig spikes, and surplus catch-up recovery.
 
 Hackathon theme: **Decent Work and Economic Growth (UN SDG 8)**.
 
-Borrowers don’t fail EMIs; calendars fail borrowers. EquiFlow reads cash-flow patterns, tells the difference between a **seasonal investment dip** and **real financial stress**, writes a plain-English recommendation, and lets the lender approve a new due amount in one click.
+Borrowers don’t fail EMIs; calendars fail borrowers. EquiFlow reads cash-flow patterns, tells the difference between a **seasonal investment dip**, **real financial stress**, and a **harvest surplus recovery phase** — writing plain-English recommendations across 7 languages, letting lenders approve adaptive due amounts in one click.
 
 No build step. No paid APIs. No server to babysit.
 
@@ -31,8 +31,8 @@ First visit auto-seeds local demo data (February 2026). **Reset demo** on either
 4. Click **Approve recommendation**. The plan is written to `repayment_plans`.
 5. Open a second tab → login page → **Enter as farmer**. Ramesh’s dashboard now shows the **lender-approved** lower amount, a green banner, and a feed notification.
 6. On either desk, click **Simulate next month**:
-   - **March** → Ramesh flips to **Seasonal Dip (Investment Phase)** (farming expenses > 40%). EMI drops to ~30% of base. This is the “not a default, it’s planting week” moment.
-   - **April** → harvest spike, status **Stable**, EMI returns to base.
+   - **March** → Ramesh flips to **Seasonal Dip (Investment Phase)** (farming expenses > 40%). EMI drops to ~30% of base (₹1,440). This is the “not a default, it’s planting week” moment.
+   - **April** → Harvest spike! Status flips to **Harvest Surplus (Catch-up Phase)**. Recommended EMI becomes **Base EMI + Past Relief Recovery**, allowing Ramesh to repay past deferred relief in a single high-profit cycle without household strain.
 
 ---
 
@@ -47,6 +47,15 @@ First visit auto-seeds local demo data (February 2026). **Reset demo** on either
 
 ---
 
+## Key Features & Cash-Flow Engine
+
+- **Adaptive EMI Scaling**: Automatically scales EMI down to 30%–50% of base during planting or lean months when household cash is tight.
+- **Harvest Surplus Catch-Up Recovery**: Tracks cumulative deferred relief during lean months and automatically recommends a Catch-Up EMI ($\text{Base EMI} + \text{Past Relief Recovery}$) during high-income harvest cycles without creating household distress.
+- **MicroPulse Weekly Bites**: Offers optional small weekly micro-payments during stress periods to maintain financial momentum.
+- **Dynamic 7-Language i18n**: Hand-authored dictionary & rule-based engine translating static text, dynamic cash-flow narratives, status pills, and live notifications at render time.
+
+---
+
 ## Multi-Language Support (7 Languages)
 
 EquiFlow features a pure client-side internationalization system (`shared/i18n.js` & `shared/i18nEngine.js`) supporting **English, Hindi, Marathi, Marwadi, Tamil, Telugu, and Bengali**.
@@ -56,30 +65,8 @@ Language choices persist across page navigation via `localStorage`.
 
 ---
 
-## Run locally
 
-Any static server from the repo root:
 
-```bash
-python3 -m http.server 8080
-# or
-npx --yes serve -p 8080
-```
-
-Open http://localhost:8080
-
----
-
-## Deploy (GitHub → Cloudflare Pages)
-
-1. Push this folder to GitHub.
-2. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → Connect to GitHub → select the repo.
-3. **Framework preset:** None  
-   **Build command:** *(leave empty)*  
-   **Build output directory:** `/`
-4. Deploy. No environment variables required for the mock.
-
----
 
 ## File structure
 
