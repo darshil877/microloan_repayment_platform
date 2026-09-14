@@ -17,18 +17,23 @@
       var m = a.metrics || {};
       var status = a.status || "";
       var rec = formatINR(a.recommendedEMI);
-      var base = formatINR(a.baseEMI || a.recommendedEMI);
+      var base = formatINR(a.baseEMI || m.baseEMI || a.recommendedEMI);
       var curInc = formatINR(m.currentIncome);
       var avgInc = formatINR(m.avgIncome);
       var curExp = formatINR(m.currentExpenses);
       var drop = pct(m.dropPct || 0);
       var farm = pct(m.farmingShare || 0);
       var month = m.monthName || "";
+      var catchUp = formatINR(m.catchUpAmount || 0);
+      var accum = formatINR(m.accumulatedRelief || 0);
 
       var message = "";
       var suggestedAction = "";
 
-      if (status === "Stable") {
+      if (status.indexOf("Surplus") >= 0) {
+        message = month + " में फसल/अधिशेष आय के कारण आय बढ़कर " + curInc + " हो गई। पिछले मंदी के महीनों में कुल " + accum + " की किश्त राहत दी गई थी। इस चक्र में अनुशंसित भुगतान " + rec + " (" + base + " मूल ईएमआई + " + catchUp + " पुरानी राहत वसूली) है।";
+        suggestedAction = "कुल अनुशंसित राशि " + rec + " (" + base + " मूल + " + catchUp + " पुरानी राहत वसूली) वसूल करें। किसान बिना किसी तनाव के पुरानी बकाया राहत चुका रहा है।";
+      } else if (status === "Stable") {
         message = month + " में आय " + curInc + " है, जो सामान्य सीमा (औसत " + avgInc + ") के भीतर है। " + curExp + " का खर्च नियमित है। " + base + " की मूल ईएमआई उपयुक्त है।";
         suggestedAction = "इस चक्र में निर्धारित संग्रह जारी रखें। किसी हस्तक्षेप की आवश्यकता नहीं है।";
       } else if (status.indexOf("Seasonal") === 0) {
@@ -49,18 +54,23 @@
       var m = a.metrics || {};
       var status = a.status || "";
       var rec = formatINR(a.recommendedEMI);
-      var base = formatINR(a.baseEMI || a.recommendedEMI);
+      var base = formatINR(a.baseEMI || m.baseEMI || a.recommendedEMI);
       var curInc = formatINR(m.currentIncome);
       var avgInc = formatINR(m.avgIncome);
       var curExp = formatINR(m.currentExpenses);
       var drop = pct(m.dropPct || 0);
       var farm = pct(m.farmingShare || 0);
       var month = m.monthName || "";
+      var catchUp = formatINR(m.catchUpAmount || 0);
+      var accum = formatINR(m.accumulatedRelief || 0);
 
       var message = "";
       var suggestedAction = "";
 
-      if (status === "Stable") {
+      if (status.indexOf("Surplus") >= 0) {
+        message = month + " मध्ये पिकाच्या भरघोस उत्पन्नामुळे उत्पन्न वाढून " + curInc + " झाले. मागील मंदीच्या महिन्यात " + accum + " ची सूट दिली होती. या चक्रात शिफारस केलेली रक्कम " + rec + " (" + base + " मूळ ईएमआय + " + catchUp + " जुनी सूट वसुली) आहे.";
+        suggestedAction = "एकूण शिफारस केलेली रक्कम " + rec + " (" + base + " मूळ + " + catchUp + " जुनी सूट वसुली) जमा करा. शेतकरी विनाताण जुनी सूट परत फेडत आहे.";
+      } else if (status === "Stable") {
         message = month + " मध्ये उत्पन्न " + curInc + " आहे, जे नेहमीच्या श्रेणीत (सरासरी " + avgInc + ") आहे. " + curExp + " चा खर्च नियमित आहे. " + base + " ची मूळ ईएमआय योग्य आहे.";
         suggestedAction = "या चक्रात ठरवलेली वसुली सुरू ठेवा. हस्तक्षेपाची गरज नाही.";
       } else if (status.indexOf("Seasonal") === 0) {
@@ -81,16 +91,21 @@
       var m = a.metrics || {};
       var status = a.status || "";
       var rec = formatINR(a.recommendedEMI);
-      var base = formatINR(a.baseEMI || a.recommendedEMI);
+      var base = formatINR(a.baseEMI || m.baseEMI || a.recommendedEMI);
       var curInc = formatINR(m.currentIncome);
       var avgInc = formatINR(m.avgIncome);
       var drop = pct(m.dropPct || 0);
       var farm = pct(m.farmingShare || 0);
+      var catchUp = formatINR(m.catchUpAmount || 0);
+      var accum = formatINR(m.accumulatedRelief || 0);
 
       var message = "";
       var suggestedAction = "";
 
-      if (status === "Stable") {
+      if (status.indexOf("Surplus") >= 0) {
+        message = "इण म्हीने फसल री बंपर कमाई सू आय बधर " + curInc + " हुगी। पाछला मंदी रा म्हीनां मांय कुल " + accum + " री छूट दीवी ही। इण म्हीने री किश्त " + rec + " (" + base + " मूल + " + catchUp + " पाछली छूट री भरपाई) है।";
+        suggestedAction = "कुल रकम " + rec + " (" + base + " मूल + " + catchUp + " पाछली छूट वसूली) लेवो। ओ किसान बिना तंगी पाछली छूट चुकावे है।";
+      } else if (status === "Stable") {
         message = "कमाई " + curInc + " है, जकी आम कमाई (" + avgInc + ") रे बराबर है। मूळ किश्त " + base + " सही है।";
         suggestedAction = "चालू किश्त री वसूली जारी रखो।";
       } else if (status.indexOf("Seasonal") === 0) {
@@ -111,16 +126,21 @@
       var m = a.metrics || {};
       var status = a.status || "";
       var rec = formatINR(a.recommendedEMI);
-      var base = formatINR(a.baseEMI || a.recommendedEMI);
+      var base = formatINR(a.baseEMI || m.baseEMI || a.recommendedEMI);
       var curInc = formatINR(m.currentIncome);
       var avgInc = formatINR(m.avgIncome);
       var drop = pct(m.dropPct || 0);
       var farm = pct(m.farmingShare || 0);
+      var catchUp = formatINR(m.catchUpAmount || 0);
+      var accum = formatINR(m.accumulatedRelief || 0);
 
       var message = "";
       var suggestedAction = "";
 
-      if (status === "Stable") {
+      if (status.indexOf("Surplus") >= 0) {
+        message = "அறுவடை வருவாய் காரணமாக வருமானம் " + curInc + " ஆக அதிகரித்தது. முந்தைய மாதங்களில் " + accum + " நிவாரணம் வழங்கப்பட்டது. இந்த சுழற்சியில் பரிந்துரைக்கப்பட்ட தொகை " + rec + " (" + base + " அடிப்படை + " + catchUp + " பழைய நிவாரண மீட்பு).";
+        suggestedAction = "மொத்த பரிந்துரைக்கப்பட்ட தொகையான " + rec + " (" + base + " அடிப்படை + " + catchUp + " நிவாரண மீட்பு) வசூலிக்கவும்.";
+      } else if (status === "Stable") {
         message = "வருமானம் " + curInc + " ஆக உள்ளது, சராசரி (" + avgInc + ") வரம்பிற்குள் உள்ளது. அடிப்படை EMI " + base + " பொருத்தமானது.";
         suggestedAction = "வழக்கமான வசூலைத் தொடரவும்.";
       } else if (status.indexOf("Seasonal") === 0) {
@@ -141,16 +161,21 @@
       var m = a.metrics || {};
       var status = a.status || "";
       var rec = formatINR(a.recommendedEMI);
-      var base = formatINR(a.baseEMI || a.recommendedEMI);
+      var base = formatINR(a.baseEMI || m.baseEMI || a.recommendedEMI);
       var curInc = formatINR(m.currentIncome);
       var avgInc = formatINR(m.avgIncome);
       var drop = pct(m.dropPct || 0);
       var farm = pct(m.farmingShare || 0);
+      var catchUp = formatINR(m.catchUpAmount || 0);
+      var accum = formatINR(m.accumulatedRelief || 0);
 
       var message = "";
       var suggestedAction = "";
 
-      if (status === "Stable") {
+      if (status.indexOf("Surplus") >= 0) {
+        message = "పంట రాబడి వల్ల ఆదాయం " + curInc + " కి పెరిగింది. గత నెలల్లో " + accum + " ఉపశమనం అందించబడింది. ఈ చక్రంలో సిఫార్సు చేసిన చెల్లింపు " + rec + " (" + base + " మూల + " + catchUp + " పాత ఉపశమన రికవరీ).";
+        suggestedAction = "మొత్తం సిఫార్సు చేసిన " + rec + " (" + base + " మూల + " + catchUp + " పాత ఉపశమన రికవరీ) వసూలు చేయండి.";
+      } else if (status === "Stable") {
         message = "ఆదాయం " + curInc + " గా ఉంది, సాధారణ పరిధి (" + avgInc + ") లోనే ఉంది. మూల EMI " + base + " సరిపోతుంది.";
         suggestedAction = "షెడ్యూల్ చేసిన వసూలును కొనసాగించండి.";
       } else if (status.indexOf("Seasonal") === 0) {
@@ -171,16 +196,21 @@
       var m = a.metrics || {};
       var status = a.status || "";
       var rec = formatINR(a.recommendedEMI);
-      var base = formatINR(a.baseEMI || a.recommendedEMI);
+      var base = formatINR(a.baseEMI || m.baseEMI || a.recommendedEMI);
       var curInc = formatINR(m.currentIncome);
       var avgInc = formatINR(m.avgIncome);
       var drop = pct(m.dropPct || 0);
       var farm = pct(m.farmingShare || 0);
+      var catchUp = formatINR(m.catchUpAmount || 0);
+      var accum = formatINR(m.accumulatedRelief || 0);
 
       var message = "";
       var suggestedAction = "";
 
-      if (status === "Stable") {
+      if (status.indexOf("Surplus") >= 0) {
+        message = "ফসল কাটার পর আয় বেড়ে " + curInc + " হয়েছে। আগের মন্দার মাসে " + accum + " টাকা ছাড় দেওয়া হয়েছিল। এই চক্রে সুপারিশকৃত কিস্তি " + rec + " (" + base + " মূল + " + catchUp + " আগের ছাড় পুনরুদ্ধার)।";
+        suggestedAction = "মোট সুপারিশকৃত " + rec + " (" + base + " মূল + " + catchUp + " আগের ছাড় পুনরুদ্ধার) আদায় করুন।";
+      } else if (status === "Stable") {
         message = "আয় " + curInc + ", যা স্বাভাবিক সীমার (" + avgInc + ") মধ্যে। মূল ইএমআই " + base + " উপযুক্ত।";
         suggestedAction = "নির্ধারিত আদায় চালু রাখুন।";
       } else if (status.indexOf("Seasonal") === 0) {

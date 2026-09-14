@@ -7,13 +7,15 @@
     "Stable": "status_stable",
     "Seasonal Dip (Investment Phase)": "status_seasonal",
     "Financial Stress": "status_stress",
-    "Critical": "status_critical"
+    "Critical": "status_critical",
+    "Harvest Surplus (Catch-up Phase)": "status_surplus"
   };
 
   function statusLabel(status) {
     if (!status) return "";
     var key = STATUS_KEYS[status];
     if (!key && status.indexOf("Seasonal") === 0) key = "status_seasonal";
+    else if (!key && status.indexOf("Surplus") >= 0) key = "status_surplus";
     return window.EquiFlowI18n ? EquiFlowI18n.t(key || status) : status;
   }
 
@@ -22,6 +24,7 @@
     if (status === "Stable") { cls = "status-stable"; }
     else if (status.indexOf("Seasonal") === 0) { cls = "status-seasonal"; }
     else if (status === "Critical") { cls = "status-critical"; }
+    else if (status.indexOf("Surplus") >= 0) { cls = "status-surplus"; }
     var text = statusLabel(status);
     return '<span class="status-pill ' + cls + '">' + text + "</span>";
   }

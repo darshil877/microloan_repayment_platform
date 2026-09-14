@@ -73,9 +73,56 @@
 
     var dropPct = Math.max(0, 1 - incomeRatio);
     var monthName = current.date.toLocaleString("en-IN", { month: "long", year: "numeric" });
+
+    var accumulatedRelief = 0;
+    if (sorted.length > 1) {
+      for (var k = 0; k < history.length; k++) {
+        var hTxn = history[k];
+        var pastHist = history.slice(0, k);
+        var pastAvgInc = pastHist.length ? avg(pastHist.map(function (x) { return x.income; })) : hTxn.income;
+        if (!pastAvgInc) pastAvgInc = 1;
+        var hIncRatio = hTxn.income / pastAvgInc;
+        var hFarmShare = hTxn.expenses > 0 ? hTxn.farming_expenses / hTxn.expenses : 0;
+        var hIsDip = hIncRatio < dipThreshold;
+
+        if (hIsDip && hFarmShare > 0.4) {
+          var pRec = Math.max(100, roundTo(base * 0.3, 50));
+          accumulatedRelief += (base - pRec);
+        } else if (hIsDip) {
+          var pRec = Math.max(100, roundTo(base * 0.5, 50));
+          accumulatedRelief += (base - pRec);
+        } else if (hIncRatio >= 1.25 && accumulatedRelief > 0) {
+          var netCash = hTxn.income - hTxn.expenses;
+          var pCatchup = Math.min(accumulatedRelief, roundTo(Math.max(0, netCash - base) * 0.5, 50));
+          accumulatedRelief = Math.max(0, accumulatedRelief - pCatchup);
+        }
+      }
+    }
+
+    var netCashFlow = current.income - current.expenses;
+    var isSurplus = !isDip && accumulatedRelief > 0 && (incomeRatio >= 1.25 || current.category === "harvest" || netCashFlow >= base + 2000);
+    var catchUpAmount = 0;
+
     var status, riskLevel, recommendedEMI, message, suggestedAction;
 
-    if (!isDip) {
+    if (isSurplus) {
+      status = "Harvest Surplus (Catch-up Phase)";
+      riskLevel = "Normal";
+      var maxCatchUp = roundTo(Math.max(0, netCashFlow - base) * 0.5, 50);
+      catchUpAmount = Math.max(50, Math.min(accumulatedRelief, maxCatchUp));
+      recommendedEMI = base + catchUpAmount;
+      message =
+        "Income in " + monthName + " surged to " + formatINR(current.income) +
+        " (" + pct(incomeRatio - 1) + "% above average of " + formatINR(avgIncome) +
+        ") thanks to harvest/surplus inflows. Prior lean months provided " + formatINR(accumulatedRelief) +
+        " in cumulative EMI relief. With strong net cash flow of " + formatINR(netCashFlow) +
+        ", cash flow comfortably supports the base EMI of " + formatINR(base) +
+        " plus a catch-up recovery of " + formatINR(catchUpAmount) + " for this cycle.";
+      suggestedAction =
+        "Collect the total recommended amount of " + formatINR(recommendedEMI) +
+        " (" + formatINR(base) + " Base EMI + " + formatINR(catchUpAmount) +
+        " Past Relief Recovery). The borrower recovers past deferred payments with zero household distress.";
+    } else if (!isDip) {
       status = "Stable";
       riskLevel = "Normal";
       recommendedEMI = base;
@@ -134,7 +181,7 @@
     }
 
     var weeklyIncome = avgIncome / 4.33;
-    var microPulse = status === "Stable" ? null : Math.max(50, roundTo(weeklyIncome * 0.12, 10));
+    var microPulse = (status === "Stable" || isSurplus) ? null : Math.max(50, roundTo(weeklyIncome * 0.12, 10));
 
     return {
       status: status,
@@ -155,7 +202,10 @@
         monthName: monthName,
         dropPct: dropPct,
         lastYearIncome: lastYear ? lastYear.income : null,
-        currentDate: current.date.toISOString().slice(0, 10)
+        currentDate: current.date.toISOString().slice(0, 10),
+        baseEMI: base,
+        accumulatedRelief: accumulatedRelief,
+        catchUpAmount: catchUpAmount
       }
     };
   }

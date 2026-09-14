@@ -93,6 +93,7 @@ body {
 .status-seasonal { background: #f3e3b8; color: #6b4e0e; }
 .status-stress { background: #f6d7b8; color: #7a3e10; }
 .status-critical { background: #f4cfc8; color: #8a2a1a; }
+.status-surplus { background: #bfe7cf; color: #0b4f34; border: 1px solid #7dc79b; }
 
 .health-battery {
   display: flex;

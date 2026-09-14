@@ -86,13 +86,15 @@
     "Stable": "status_stable",
     "Seasonal Dip (Investment Phase)": "status_seasonal",
     "Financial Stress": "status_stress",
-    "Critical": "status_critical"
+    "Critical": "status_critical",
+    "Harvest Surplus (Catch-up Phase)": "status_surplus"
   };
 
   function statusLabel(status) {
     if (!status) return "";
     var key = STATUS_KEYS[status];
     if (!key && status.indexOf("Seasonal") === 0) key = "status_seasonal";
+    else if (!key && status.indexOf("Surplus") >= 0) key = "status_surplus";
     return EquiFlowI18n.t(key || status);
   }
 
@@ -188,11 +190,12 @@
     else if (analysis.riskLevel === "High") hintKey = "health_hint_high";
     document.getElementById("health-hint").textContent = EquiFlowI18n.t(hintKey);
 
+    var isSurplus = analysis.status.indexOf("Surplus") >= 0;
     document.getElementById("emi-amount").textContent = formatINR(effective);
     document.getElementById("base-emi").textContent = formatINR(loan.base_emi);
     document.getElementById("emi-note").textContent = approved
       ? EquiFlowI18n.t("note_approved")
-      : (effective < loan.base_emi ? EquiFlowI18n.t("note_auto_adjusted") : EquiFlowI18n.t("note_on_schedule"));
+      : (isSurplus ? EquiFlowI18n.t("note_surplus_catchup") : (effective < loan.base_emi ? EquiFlowI18n.t("note_auto_adjusted") : EquiFlowI18n.t("note_on_schedule")));
     document.getElementById("approved-banner").classList.toggle("hidden", !approved);
 
     document.getElementById("loan-product").textContent = loan.product || "Microloan";
